@@ -1,0 +1,122 @@
+<c-row>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Thông tin người thân (Relative Information)</strong>
+      </c-card-header>
+      <c-card-body>
+        <c-row>
+          <form (ngSubmit)="addRelativeInformation()" (keypress)="handleEnter($event)">
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-3">
+                  <label class="form-label" for="borrower-name">Người vay</label>
+                  <select class="form-select" id="borrower-name" [(ngModel)]="newRelativeInformation.borrowerId" name="borrowerId" aria-label="Default select example">
+                    <option selected="selected" disabled>Chọn tên người vay</option>
+                    <option *ngFor="let borrower of BorrowerInformationList" [value]="borrower.id">{{ borrower.fullName }}</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-name">Họ và tên</label>
+                  <input class="form-control" id="relative-name" type="text" placeholder="Họ và tên người bảo lãnh" [(ngModel)]="newRelativeInformation.fullName" name="fullName" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-phone">Số điện thoại</label>
+                  <input class="form-control" id="relative-phone" type="text" placeholder="Số điện thoại chính chủ" [(ngModel)]="newRelativeInformation.phoneNumber" name="phone" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-email">Email</label>
+                  <input class="form-control" id="relative-email" type="email" placeholder="Email của người bảo lãnh" [(ngModel)]="newRelativeInformation.email" name="email" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-cccd">Số căn cước công dân</label>
+                  <input class="form-control" id="relative-cccd" type="text" placeholder="Số căn cước công dân người bảo lãnh" [(ngModel)]="newRelativeInformation.identityCardNumber" name="cccd" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-issue-date">Ngày cấp</label>
+                  <input class="form-control" id="relative-issue-date" type="date" [(ngModel)]="newRelativeInformation.dateOfIssue" name="issueDate" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-issue-place">Nơi cấp</label>
+                  <input class="form-control" id="relative-issue-place" type="text" placeholder="Nơi cấp" [(ngModel)]="newRelativeInformation.placeOfIssue" name="issuePlace" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-dob">Sinh ngày</label>
+                  <input class="form-control" id="relative-dob" type="date" [(ngModel)]="newRelativeInformation.dateOfBirth" name="dob" required>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label class="form-label" for="relative-hometown">Quê quán</label>
+                  <input class="form-control" id="relative-hometown" type="text" placeholder="Quê quán" [(ngModel)]="newRelativeInformation.hometown" name="hometown" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-address">Địa chỉ thường trú</label>
+                  <input class="form-control" id="relative-address" type="text" placeholder="Địa chỉ thường trú" [(ngModel)]="newRelativeInformation.address" name="address" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-gender">Giới tính</label>
+                  <select class="form-select" id="relative-gender" [(ngModel)]="newRelativeInformation.gender" name="gender" aria-label="Default select example">
+                    <option selected="selected" disabled>Chọn giới tính(theo CCCD)</option>
+                    <option value="0">Nam</option>
+                    <option value="1">Nữ</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Ảnh CCCD mặt trước</label>
+                  <input class="form-control" (change)="choiserImgFile($event, 'imageFront')" type="file" [(ngModel)]="newRelativeInformation.imageFront" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div *ngIf="selectedImageMap['imageFront']">
+                  <div style="position: relative; display: inline-block;">
+                    <img [src]="selectedImageMap['imageFront']" alt="Selected Image" style="width: 50%;">
+                    <button (click)="clearSelectedImage('imageFront')"
+                      style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                      <span style="color: red; font-size: 20px;">×</span>
+                    </button>
+                  </div>
+                </div>
+
+
+
+                <div class="mb-3">
+                  <label class="form-label">Ảnh CCCD mặt sau</label>
+                  <input class="form-control" (change)="choiserImgFile($event, 'imageBack')" type="file" [(ngModel)]="newRelativeInformation.imageBack" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div *ngIf="selectedImageMap['imageBack']">
+                  <div style="position: relative; display: inline-block;">
+                    <img [src]="selectedImageMap['imageBack']" alt="Selected Image" style="width: 50%;">
+                    <button (click)="clearSelectedImage('imageBack')"
+                      style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                      <span style="color: red; font-size: 20px;">×</span>
+                    </button>
+                  </div>
+                </div>
+
+
+
+                <div class="mb-3">
+                  <label class="form-label">Ảnh chân dung</label>
+                  <input class="form-control" (change)="choiserImgFile($event, 'portrait')" type="file" [(ngModel)]="newRelativeInformation.portrait" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div *ngIf="selectedImageMap['portrait']">
+                  <div style="position: relative; display: inline-block;">
+                    <img [src]="selectedImageMap['portrait']" alt="Selected Image" style="width: 50%;">
+                    <button (click)="clearSelectedImage('portrait')"
+                      style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                      <span style="color: red; font-size: 20px;">×</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="relative-note">Note</label>
+                  <textarea class="form-control" id="relative-note" rows="5" placeholder="Note" [(ngModel)]="newRelativeInformation.note" name="note"></textarea>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </form>
+        </c-row>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

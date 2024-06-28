@@ -1,0 +1,40 @@
+<c-nav variant="pills">
+  <c-nav-item>
+    <a [cTabContent]="tabContent3" [tabPaneIdx]="0" cNavLink>
+      Thông tin người vay
+    </a>
+  </c-nav-item>
+  <c-nav-item>
+    <a [cTabContent]="tabContent3" [tabPaneIdx]="1" cNavLink>
+      Thông tin người thân
+    </a>
+  </c-nav-item>
+  <c-nav-item>
+    <a [cTabContent]="tabContent3" [tabPaneIdx]="2" cNavLink>
+      Thông tin khoản vay
+    </a>
+  </c-nav-item>
+  <c-nav-item>
+    <a [cTabContent]="tabContent3" [tabPaneIdx]="3" cNavLink>
+      Thông tin hợp đồng
+    </a>
+  </c-nav-item>
+</c-nav>
+<c-tab-content #tabContent3="cTabContent" cRounded="bottom" [activeTabPaneIdx]="activeTabPaneIdx">
+
+  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel" >
+    <app-borrower-information  (nextTab)="handleNextTab()"></app-borrower-information>
+  </c-tab-pane>
+
+  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel" >
+    <app-relative-information  (nextTab)="handleNextTab()"></app-relative-information>
+  </c-tab-pane>
+  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel" >
+    <app-loan-information  (nextTab)="handleNextTab()"></app-loan-information>
+  </c-tab-pane>
+
+  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel" >
+    <app-loan-contract  (nextTab)="handleNextTab()"></app-loan-contract>
+  </c-tab-pane>
+
+</c-tab-content>
