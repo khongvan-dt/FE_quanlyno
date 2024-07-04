@@ -66,7 +66,7 @@ export class LoginComponent {
         (response) => {
           if (response && response.token) {
             localStorage.setItem('token', response.token);
-            this.router.navigate(['/base/all-loans']);
+            this.router.navigate(['/all-loans']);
           } else {
             this.errorMessage = 'Invalid username or password';
           }
@@ -77,5 +77,5 @@ export class LoginComponent {
         }
       );
   }
-  
+
 }

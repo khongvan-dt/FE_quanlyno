@@ -55,18 +55,17 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class AddLoansComponent implements AfterViewInit {
-  activeTabPaneIdx: number = 0;
+  activeTabPaneIdx = 0;
 
+  handleNextTab() {
+    this.activeTabPaneIdx++;
+  }
   private borrowerInfoComponent!: BorrowerInformationComponent;
 
   ngAfterViewInit() {
     if (!this.borrowerInfoComponent) {
       console.error('BorrowerInformationComponent is not initialized.');
     }
-  }
-
-  handleNextTab() {
-    this.activeTabPaneIdx++;
   }
 
   handleSubmit() {

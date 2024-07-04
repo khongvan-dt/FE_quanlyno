@@ -133,7 +133,7 @@ export const navItems: INavData[] = [
   // },
   {
     name: 'Tất cả các khoản cho vay',
-    url: '/base/all-loans',
+    url: '/all-loans',
     iconComponent: { name: 'cil-notes' },
   },
   {

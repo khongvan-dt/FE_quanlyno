@@ -2,10 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocsExampleComponent } from '@docs-components/public-api';
 import { MatTabsModule } from '@angular/material/tabs';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UploadService  } from '../../../upload.service';
 import {
   RowComponent,

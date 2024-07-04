@@ -4,7 +4,6 @@ import { RouterLink } from '@angular/router';
 import { DocsExampleComponent } from '@docs-components/public-api';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
-
 import {
   RowComponent,
   ColComponent,
@@ -33,22 +32,21 @@ import { UploadService } from '../../../upload.service';
 import { Toast } from '../../../toast';
 
 class RelativeInformation {
-  userId: string = '';
-  borrowerId: number = 0;
+  borrowerId?: number;
   fullName: string = '';
   phoneNumber: string = '';
-  email?: string = '';
+  email?: string;
   identityCardNumber: string = '';
   dateOfIssue?: Date;
-  placeOfIssue: string = '';
-  gender: string = '';
+  placeOfIssue?: string;
+  gender: number = 0;
   dateOfBirth?: Date;
   hometown: string = '';
   address: string = '';
   imageBack: string = '';
   imageFront: string = '';
   portrait: string = '';
-  note?: string = '';
+  note?: string;
 }
 
 class BorrowerInformation {
@@ -103,17 +101,15 @@ export class RelativeInformationComponent {
     this.getBorrowerInformation();
   }
 
-
   getBorrowerInformation(): void {
     const token = localStorage.getItem('token');
     if (token) {
-      const userId = this.getUserIdFromToken(token);
       const headers = {
         Authorization: 'Bearer ' + token,
       };
       axios
         .get<BorrowerInformation[]>(
-          `http://localhost:5219/api/BorrowerInformation?userId=${userId}`,
+          `http://localhost:5219/api/BorrowerInformation`,
           { headers }
         )
         .then((response) => {
@@ -127,8 +123,8 @@ export class RelativeInformationComponent {
 
   getUserIdFromToken(token: string): string {
     const tokenParts = token.split('.');
-    const decodedToken = JSON.parse(atob(tokenParts[1]));
-    return decodedToken.userId;
+    const payload = JSON.parse(atob(tokenParts[1]));
+    return payload.userId;
   }
 
   addRelativeInformation(): void {
@@ -137,7 +133,7 @@ export class RelativeInformationComponent {
     };
     axios
       .post<any>(
-        'http://localhost:5219/api/RelativeInformation',
+        'http://localhost:5219/api/relativeInformation',
         this.newRelativeInformation,
         { headers }
       )
@@ -148,7 +144,6 @@ export class RelativeInformationComponent {
       })
       .catch((error) => {
         new Toast('error');
-        console.log(this.newRelativeInformation);
       });
   }
 
@@ -162,8 +157,8 @@ export class RelativeInformationComponent {
     this.uploadService.clearSelectedImage(key);
     this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];
   }
-  handleEnter(event:KeyboardEvent):void {
-    if(event.key==='Enter'){
+  handleEnter(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
       this.addRelativeInformation();
     }
   }

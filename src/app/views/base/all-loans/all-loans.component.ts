@@ -168,7 +168,7 @@ class AllLoan {
     RoundedDirective,
     TabPaneComponent,
     FormsModule,
-    CommonModule
+    CommonModule,
   ],
 })
 export class AllLoansComponent {
@@ -180,14 +180,16 @@ export class AllLoansComponent {
 
   getAllLoan(): void {
     const token = this.getToken();
-    if (token) {
+    if (token) {  
       const userId = this.getUserIdFromToken(token);
       const headers = {
         Authorization: 'Bearer ' + token,
       };
 
       axios
-        .get<AllLoan[]>(`http://localhost:5219/api/BorrowerInformation`, { headers })
+        .get<AllLoan[]>(`http://localhost:5219/api/BorrowerInformation`, {
+          headers,
+        })
         .then((response) => {
           this.AllLoanList = response.data;
         })

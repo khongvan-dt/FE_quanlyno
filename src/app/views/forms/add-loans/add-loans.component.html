@@ -20,21 +20,21 @@
     </a>
   </c-nav-item>
 </c-nav>
+
 <c-tab-content #tabContent3="cTabContent" cRounded="bottom" [activeTabPaneIdx]="activeTabPaneIdx">
-
-  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel" >
-    <app-borrower-information  (nextTab)="handleNextTab()"></app-borrower-information>
+  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel">
+    <app-borrower-information (nextTab)="handleNextTab()"></app-borrower-information>
   </c-tab-pane>
 
-  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel" >
-    <app-relative-information  (nextTab)="handleNextTab()"></app-relative-information>
-  </c-tab-pane>
-  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel" >
-    <app-loan-information  (nextTab)="handleNextTab()"></app-loan-information>
+  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel">
+    <app-relative-information (nextTab)="handleNextTab()"></app-relative-information>
   </c-tab-pane>
 
-  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel" >
-    <app-loan-contract  (nextTab)="handleNextTab()"></app-loan-contract>
+  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel">
+    <app-loan-information (nextTab)="handleNextTab()"></app-loan-information>
   </c-tab-pane>
 
+  <c-tab-pane aria-labelledby="docs-code-preview" class="p-3 preview" role="tabpanel">
+    <app-loan-contract (nextTab)="handleNextTab()"></app-loan-contract>
+  </c-tab-pane>
 </c-tab-content>
