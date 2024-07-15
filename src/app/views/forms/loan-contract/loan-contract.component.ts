@@ -20,6 +20,7 @@ import {
   ButtonDirective,
 } from '@coreui/angular';
 import { BorrowerInformationComponent } from '../borrower-Information/borrower-Information.component';
+import { TilleComponent } from 'src/app/tille/tille.component';
 
 @Component({
   selector: 'app-loan-contract',
@@ -41,6 +42,7 @@ import { BorrowerInformationComponent } from '../borrower-Information/borrower-I
     FormCheckLabelDirective,
     ButtonGroupComponent,
     ButtonDirective,
+    TilleComponent
   ],
 })
 
@@ -48,7 +50,8 @@ export class LoanContractComponent implements AfterViewInit {
 
   @ViewChild(BorrowerInformationComponent)
   private borrowerInfoComponent!: BorrowerInformationComponent;
-
+  content="Thông tin tất cả các khoản vay(Information on all loans)";
+  title = "Bạn có thể xem được thông tin tất cả các khoản vay ở đây.";
   ngAfterViewInit() {
     if (!this.borrowerInfoComponent) {
       console.error('BorrowerInformationComponent is not initialized.');

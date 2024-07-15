@@ -8,7 +8,7 @@
         <c-row>
           <form (ngSubmit)="addRelativeInformation()" (keypress)="handleEnter($event)">
             <div class="row">
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <div class="mb-3">
                   <label class="form-label" for="borrower-name">Người vay</label>
                   <select class="form-select" id="borrower-name" [(ngModel)]="newRelativeInformation.borrowerId" name="borrowerId" aria-label="Default select example">
@@ -45,7 +45,7 @@
                   <input class="form-control" id="relative-dob" type="date" [(ngModel)]="newRelativeInformation.dateOfBirth" name="dob" required>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <div class="mb-3">
                   <label class="form-label" for="relative-hometown">Quê quán</label>
                   <input class="form-control" id="relative-hometown" type="text" placeholder="Quê quán" [(ngModel)]="newRelativeInformation.hometown" name="hometown" required>

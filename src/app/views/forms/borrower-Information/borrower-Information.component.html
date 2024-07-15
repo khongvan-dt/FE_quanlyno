@@ -1,3 +1,5 @@
+<app-tille *ngIf="content || title" [content]="content" [title]="title"></app-tille>
+
 <c-row>
   <c-col xs="12">
     <c-card class="mb-4">
@@ -8,7 +10,7 @@
         <c-row>
           <form (ngSubmit)="addBorrowerInformation()">
             <div class="row">
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-name">Họ và tên(*)</label>
                   <input class="form-control" id="basic-form-name" type="text" placeholder="Họ và tên người vay"
@@ -23,7 +25,7 @@
                     <option value="2">Còn nợ</option>
                   </select>
                 </div>
-                
+
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-email">Số điện thoại(*)</label>
                   <input class="form-control" id="basic-form-email" type="text" placeholder="Số điện thoại chính chủ"
@@ -57,7 +59,7 @@
                     [(ngModel)]="newBorrowerInformation.DateOfBirth" name="dateOfBirth">
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
 
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-dob">Quê quán(*)</label>
@@ -79,7 +81,21 @@
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">Ảnh CCCD mặt sau</label>
+                  <label class="form-label">Ảnh CCCD mặt trước(*)</label>
+                  <input class="form-control" type="file"
+                  (change)="onFileSelected($event, 'ImageFront')" name="ImageFront" [(ngModel)]="newBorrowerInformation.ImageFront">
+                  <div *ngIf="selectedImageMap['ImageFront']">
+                    <div style="position: relative; display: inline-block;">
+                      <img [src]="selectedImageMap['ImageFront']" alt="Selected Image" style="width: 50%;">
+                      <button (click)="clearSelectedImage('ImageFront')"
+                        style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                        <span style="color: red; font-size: 20px;">×</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Ảnh CCCD mặt sau(*)</label>
                   <input class="form-control" type="file" (change)="onFileSelected($event, 'ImageBack')" [(ngModel)]="newBorrowerInformation.ImageBack"
                     name="ImageBack">
                   <div *ngIf="selectedImageMap['ImageBack']">
@@ -93,24 +109,11 @@
                   </div>
                 </div>
 
-                <div class="mb-3">
-                  <label class="form-label">Ảnh CCCD mặt trước</label>
-                  <input class="form-control" type="file"
-                  (change)="onFileSelected($event, 'ImageFront')" name="ImageFront" [(ngModel)]="newBorrowerInformation.ImageFront">
-                  <div *ngIf="selectedImageMap['ImageFront']">
-                    <div style="position: relative; display: inline-block;">
-                      <img [src]="selectedImageMap['ImageFront']" alt="Selected Image" style="width: 50%;">
-                      <button (click)="clearSelectedImage('ImageFront')"
-                        style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
-                        <span style="color: red; font-size: 20px;">×</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+
 
 
                 <div class="mb-3">
-                  <label class="form-label">Ảnh chân dung</label>
+                  <label class="form-label">Ảnh chân dung(*)</label>
                   <input class="form-control" type="file" (change)="onFileSelected($event, 'Portrait')" name="Portrait" [(ngModel)]="newBorrowerInformation.Portrait">
                 </div>
                 <div *ngIf="selectedImageMap['Portrait']">

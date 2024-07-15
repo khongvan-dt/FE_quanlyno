@@ -1,3 +1,4 @@
+import { TilleComponent } from './../../../tille/tille.component';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocsExampleComponent } from '@docs-components/public-api';
@@ -55,13 +56,16 @@ class BorrowerInformation {
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
+    TilleComponent
   ],
 })
 export class BorrowerInformationComponent {
   newBorrowerInformation: BorrowerInformation = new BorrowerInformation();
   selectedImageMap: { [key: string]: string | null } = {};
 
-  @Output() nextTab: EventEmitter<number> = new EventEmitter<number>();
+  content="Thêm thông tin khoản vay";
+  title = "Bạn hãy thêm thông tin cơ bản ở dưới form .";
+
 
   constructor(private uploadService: UploadService) {
     this.newBorrowerInformation = new BorrowerInformation();
@@ -73,11 +77,9 @@ export class BorrowerInformationComponent {
     this.newBorrowerInformation.Gender = 1;
     this.newBorrowerInformation.Hometown = 'Quê hương';
     this.newBorrowerInformation.Address = 'Địa chỉ thường trú';
-
     this.newBorrowerInformation.LoanDone = 1;
     this.newBorrowerInformation.Note = 'Ghi chú';
   }
-
 
   addBorrowerInformation(): void {
     const headers = {
@@ -92,7 +94,7 @@ export class BorrowerInformationComponent {
       .then((response) => {
         new Toast('success');
         this.newBorrowerInformation = new BorrowerInformation();
-        this.nextTab.emit();
+       
       })
       .catch((error) => {
         new Toast('error');

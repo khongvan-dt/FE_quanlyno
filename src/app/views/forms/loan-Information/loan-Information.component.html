@@ -8,7 +8,7 @@
         <c-row>
           <form  (ngSubmit)="addLoanInformation()" [formGroup]="loanForm">
             <div class="row">
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-gender">Người vay</label>
                   <select class="form-select" id="borrower-name" [(ngModel)]="newLoanInformation.borrowerId"
@@ -51,7 +51,7 @@
 
 
               </div>
-              <div class="col-6">
+              <div class="col-12 col-md-6">
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-dob">Lãi suất/năm (%)</label>
                   <input class="form-control" id="basic-form-dob" [(ngModel)]="newLoanInformation.interestRate"

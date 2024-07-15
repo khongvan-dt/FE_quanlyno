@@ -27,6 +27,7 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions(),
       withHashLocation()
     ),
+    
     importProvidersFrom(SidebarModule, DropdownModule),
     IconSetService,
     provideAnimations()

@@ -55,13 +55,7 @@ export const routes: Routes = [
           title: 'Relative Information'
         }
       },
-      {
-        path: 'add-loans',
-        loadComponent: () => import('./add-loans/add-loans.component').then(m => m.AddLoansComponent),
-        data: {
-          title: 'add-loans'
-        }
-      },
+    
 
     ]
   }
