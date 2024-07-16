@@ -1,11 +1,10 @@
 import { TilleComponent } from './../../../tille/tille.component';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DocsExampleComponent } from '@docs-components/public-api';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UploadService  } from '../../../upload.service';
+import { UploadService } from '../../../upload.service';
 import {
   RowComponent,
   ColComponent,
@@ -33,7 +32,7 @@ class BorrowerInformation {
   ImageBack: string = '';
   ImageFront: string = '';
   Portrait: string = '';
-  LoanDone: number = 2;
+  LoanDone: number = 1;
   Note: string = '';
 }
 
@@ -51,7 +50,7 @@ class BorrowerInformation {
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    DocsExampleComponent,
+
     FormSelectDirective,
     ReactiveFormsModule,
     CommonModule,
@@ -63,7 +62,7 @@ export class BorrowerInformationComponent {
   newBorrowerInformation: BorrowerInformation = new BorrowerInformation();
   selectedImageMap: { [key: string]: string | null } = {};
 
-  content="Thêm thông tin khoản vay";
+  content = "Thêm thông tin khoản vay";
   title = "Bạn hãy thêm thông tin cơ bản ở dưới form .";
 
 
@@ -94,7 +93,7 @@ export class BorrowerInformationComponent {
       .then((response) => {
         new Toast('success');
         this.newBorrowerInformation = new BorrowerInformation();
-       
+
       })
       .catch((error) => {
         new Toast('error');

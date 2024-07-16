@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DocsExampleComponent } from '@docs-components/public-api';
 import { RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, ButtonDirective, PopoverDirective } from '@coreui/angular';
 
 @Component({
@@ -7,7 +6,7 @@ import { RowComponent, ColComponent, TextColorDirective, CardComponent, CardHead
     templateUrl: './popovers.component.html',
     styleUrls: ['./popovers.component.scss'],
     standalone: true,
-    imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, ButtonDirective, PopoverDirective]
+    imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,  ButtonDirective, PopoverDirective]
 })
 export class PopoversComponent implements OnInit {
 

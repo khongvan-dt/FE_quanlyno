@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { DocsExampleComponent } from '@docs-components/public-api';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 import {
@@ -68,7 +67,6 @@ class BorrowerInformation {
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    DocsExampleComponent,
     InputGroupComponent,
     InputGroupTextDirective,
     FormControlDirective,
