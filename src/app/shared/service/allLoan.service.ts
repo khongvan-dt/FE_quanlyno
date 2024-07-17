@@ -1,18 +1,33 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { AllLoan } from '../model/AllLoan';
+import  { getToken, getUserIdFromToken } from './token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AllLoanService {
-  getAllLoan(): Promise<any> {
-    const headers = {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    };
-    return axios.get<any>(
-      'http://localhost:5219/api/BorrowerInformation', 
-      { headers }
-    );
+  getAllLoan(): Promise<AllLoan[]> {
+    const token = getToken();
+    if (token) {
+      const userId = getUserIdFromToken(token);
+      const headers = {
+        Authorization: 'Bearer ' + token,
+      };
+
+      return axios
+        .get<AllLoan[]>(`http://localhost:5219/api/BorrowerInformation`, {
+          headers,
+        })
+        .then((response) => response.data)
+        .catch((error) => {
+          console.error('Error fetching AllLoan list:', error);
+          throw error;
+        });
+    } else {
+      return Promise.reject('Token not found');
+    }
   }
+
+ 
 }

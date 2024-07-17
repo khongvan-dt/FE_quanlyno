@@ -20,6 +20,7 @@ import {
 import axios from 'axios';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AllLoanService } from '../../../shared/service/allLoan.service';
 
 class AllLoan {
   userId: string = '';
@@ -69,41 +70,40 @@ class AllLoan {
   ],
 })
 export class AllLoansComponent {
-  AllLoanList: AllLoan[] = [];
+  allLoanList: AllLoan[] = [];
   content="Thông tin tất cả các khoản vay(Information on all loans)";
   title = "Bạn có thể xem được thông tin tất cả các khoản vay ở đây.";
-  constructor() {
-    this.getAllLoan();
+  constructor(private allLoanService: AllLoanService) {
+    this.getAllLoans();
   }
 
-  getAllLoan(): void {
-    const token = this.getToken();
-    if (token) {
-      const userId = this.getUserIdFromToken(token);
-      const headers = {
-        Authorization: 'Bearer ' + token,
-      };
+  // getAllLoan(): void {
+  //   const token = this.getToken();
+  //   if (token) {
+  //     const userId = this.getUserIdFromToken(token);
+  //     const headers = {
+  //       Authorization: 'Bearer ' + token,
+  //     };
 
-      axios
-        .get<AllLoan[]>(`http://localhost:5219/api/BorrowerInformation`, {
-          headers,
-        })
-        .then((response) => {
-          this.AllLoanList = response.data;
-        })
-        .catch((error) => {
-          console.error('Error fetching AllLoan list:', error);
-        });
-    }
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
-  getUserIdFromToken(token: string): string {
-    const tokenParts = token.split('.');
-    const payload = JSON.parse(atob(tokenParts[1]));
-    return payload.userId;
+  //     axios
+  //       .get<AllLoan[]>(`http://localhost:5219/api/BorrowerInformation`, {
+  //         headers,
+  //       })
+  //       .then((response) => {
+  //         this.AllLoanList = response.data;
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error fetching AllLoan list:', error);
+  //       });
+  //   }
+  // }
+  getAllLoans(): void {
+    this.allLoanService.getAllLoan()
+      .then((allLoans) => {
+        this.allLoanList = allLoans;
+      })
+      .catch((error) => {
+        console.error('Error fetching AllLoan list:', error);
+      });
   }
 }
