@@ -4,7 +4,6 @@ import {
   UntypedFormBuilder,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { DocsExampleComponent } from '@docs-components/public-api';
 import {
   RowComponent,
   FormDirective,
@@ -36,7 +35,7 @@ import { TilleComponent } from 'src/app/tille/tille.component';
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    DocsExampleComponent,
+    
     FormCheckComponent,
     FormCheckInputDirective,
     FormCheckLabelDirective,

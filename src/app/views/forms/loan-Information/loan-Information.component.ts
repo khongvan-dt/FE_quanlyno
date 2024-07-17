@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
-import { DocsExampleComponent } from '@docs-components/public-api';
-import { Toast } from '../../../toast';
+import { Toast } from '../../../shared/service/toast.service';
 
 import {
   RowComponent,
@@ -66,7 +65,7 @@ class BorrowerInformation {
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    DocsExampleComponent,
+    
     FormControlDirective,
     ReactiveFormsModule,
     FormsModule,

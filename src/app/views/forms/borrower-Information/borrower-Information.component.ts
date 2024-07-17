@@ -1,11 +1,14 @@
 import { TilleComponent } from './../../../tille/tille.component';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DocsExampleComponent } from '@docs-components/public-api';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UploadService  } from '../../../upload.service';
+import { UploadService } from '../../../shared/service/upload.service';
+import { BorrowerInformation } from '../../../shared/model/BorrowerInformation'; 
+import { BorrowerService } from '../../../shared/service/borrower.service';
+import { ScanService } from '../../../shared/service/scan.sevice';
+
 import {
   RowComponent,
   ColComponent,
@@ -16,26 +19,7 @@ import {
   FormSelectDirective,
 } from '@coreui/angular';
 import axios from 'axios';
-import { Toast } from '../../../toast';
-
-class BorrowerInformation {
-  UserId: string = '';
-  FullName: string = '';
-  PhoneNumber: string = '';
-  Email: string = '';
-  IdentityCardNumber: string = '';
-  DateOfIssue: Date | null = null;
-  PlaceOfIssue: string = '';
-  Gender: Number = 2;
-  DateOfBirth: Date | null = null;
-  Hometown: string = '';
-  Address: string = '';
-  ImageBack: string = '';
-  ImageFront: string = '';
-  Portrait: string = '';
-  LoanDone: number = 2;
-  Note: string = '';
-}
+import { Toast } from '../../../shared/service/toast.service';
 
 @Component({
   selector: 'app-borrower-information',
@@ -51,7 +35,7 @@ class BorrowerInformation {
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    DocsExampleComponent,
+
     FormSelectDirective,
     ReactiveFormsModule,
     CommonModule,
@@ -62,12 +46,14 @@ class BorrowerInformation {
 export class BorrowerInformationComponent {
   newBorrowerInformation: BorrowerInformation = new BorrowerInformation();
   selectedImageMap: { [key: string]: string | null } = {};
+  
+  frontIdCard: string='';;
+  backIdCard: string='';; 
+  
+  content = "Thêm thông tin khoản vay";
+  title = "Bạn hãy thêm thông tin cơ bản ở dưới from.Những ô nào có (*) thì bắt buộc phải nhập đủ.";
 
-  content="Thêm thông tin khoản vay";
-  title = "Bạn hãy thêm thông tin cơ bản ở dưới form .";
-
-
-  constructor(private uploadService: UploadService) {
+  constructor(private uploadService: UploadService, private borrowerService: BorrowerService,private scanService: ScanService) {
     this.newBorrowerInformation = new BorrowerInformation();
     this.newBorrowerInformation.FullName = 'Nguyễn Văn A';
     this.newBorrowerInformation.PhoneNumber = '34343444444';
@@ -82,25 +68,34 @@ export class BorrowerInformationComponent {
   }
 
   addBorrowerInformation(): void {
-    const headers = {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    };
-    axios
-      .post<any>(
-        'http://localhost:5219/api/BorrowerInformation',
-        this.newBorrowerInformation,
-        { headers }
-      )
+    this.borrowerService.addBorrower(this.newBorrowerInformation)
       .then((response) => {
         new Toast('success');
         this.newBorrowerInformation = new BorrowerInformation();
-       
       })
       .catch((error) => {
         new Toast('error');
       });
   }
 
+  scanInformation(): void {
+    const imagePaths: string[] = [];
+    if (this.frontIdCard) {
+      imagePaths.push(this.frontIdCard); 
+    }
+    if (this.backIdCard) {
+      imagePaths.push(this.backIdCard); 
+    }
+  
+    this.scanService.Scan(imagePaths)
+      .then(response => {
+        console.log('Scan thành công:', response.data);
+      })
+      .catch(error => {
+        console.error('Lỗi khi scan:', error);
+      });
+  }
+  
   onFileSelected(event: any, key: string): void {
     const urlLinlApi = 'http://localhost:5219/api/BorrowerInformation/upload';
     this.uploadService.onFileSelected(event, key, urlLinlApi);
@@ -112,9 +107,3 @@ export class BorrowerInformationComponent {
     this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];
   }
 }
-
-
-
-
-
-

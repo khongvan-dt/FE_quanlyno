@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { DocsExampleComponent } from '@docs-components/public-api';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 import {
@@ -28,8 +27,8 @@ import {
 import axios from 'axios';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UploadService } from '../../../upload.service';
-import { Toast } from '../../../toast';
+import { UploadService } from '../../../shared/service/upload.service';
+import { Toast } from '../../../shared/service/toast.service';
 
 class RelativeInformation {
   borrowerId?: number;
@@ -68,7 +67,6 @@ class BorrowerInformation {
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    DocsExampleComponent,
     InputGroupComponent,
     InputGroupTextDirective,
     FormControlDirective,
