@@ -7,7 +7,7 @@ import { RowComponent, ColComponent, TextColorDirective, CardComponent, CardHead
     templateUrl: './table-borrower-information.component.html',
     styleUrls: ['./table-borrower-information.component.scss'],
     standalone: true,
-    imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,  TooltipDirective, RouterLink, ButtonDirective]
+    imports: [RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,TooltipDirective, RouterLink, ButtonDirective]
 })
 export class TableBorrowerInformation {
 

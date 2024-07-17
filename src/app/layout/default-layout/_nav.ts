@@ -49,6 +49,5 @@ export const navItems: INavData[] = [
         icon: 'nav-icon-bullet',
       },
     ],
-  },
-
+  }
 ];

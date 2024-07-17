@@ -7,6 +7,8 @@ export const routes: Routes = [
       title: 'Base'
     },
     children: [
+
+     
       {
         path: 'tables',
         loadComponent: () => import('./tables/tables.component').then(m => m.TablesComponent),

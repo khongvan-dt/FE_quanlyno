@@ -7,7 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     templateUrl: './tables.component.html',
     styleUrls: ['./tables.component.scss'],
     standalone: true,
-    imports: [RowComponent,  NgxPaginationModule,ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective]
+    imports: [RowComponent,  NgxPaginationModule,ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,  TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective]
 })
 export class TablesComponent {
 
