@@ -1,4 +1,4 @@
-import { TilleComponent } from './../../../tille/tille.component';
+import { TilleComponent } from '../../tille/tille.component';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -8,6 +8,7 @@ import { UploadService } from '../../../shared/service/upload.service';
 import { BorrowerInformation } from '../../../shared/model/BorrowerInformation'; 
 import { BorrowerService } from '../../../shared/service/borrower.service';
 import { ScanService } from '../../../shared/service/scan.sevice';
+import { Router } from '@angular/router';
 
 import {
   RowComponent,
@@ -18,7 +19,6 @@ import {
   CardBodyComponent,
   FormSelectDirective,
 } from '@coreui/angular';
-import axios from 'axios';
 import { Toast } from '../../../shared/service/toast.service';
 
 @Component({
@@ -35,7 +35,6 @@ import { Toast } from '../../../shared/service/toast.service';
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-
     FormSelectDirective,
     ReactiveFormsModule,
     CommonModule,
@@ -46,14 +45,13 @@ import { Toast } from '../../../shared/service/toast.service';
 export class BorrowerInformationComponent {
   newBorrowerInformation: BorrowerInformation = new BorrowerInformation();
   selectedImageMap: { [key: string]: string | null } = {};
+  frontIdCard: File | null = null;
+  backIdCard: File | null = null;
   
-  frontIdCard: string='';;
-  backIdCard: string='';; 
-  
-  content = "Thêm thông tin khoản vay";
+  content = "Thêm thông tin người vay";
   title = "Bạn hãy thêm thông tin cơ bản ở dưới from.Những ô nào có (*) thì bắt buộc phải nhập đủ.";
 
-  constructor(private uploadService: UploadService, private borrowerService: BorrowerService,private scanService: ScanService) {
+  constructor(private router: Router,private uploadService: UploadService, private borrowerService: BorrowerService,private scanService: ScanService) {
     this.newBorrowerInformation = new BorrowerInformation();
     this.newBorrowerInformation.FullName = 'Nguyễn Văn A';
     this.newBorrowerInformation.PhoneNumber = '34343444444';
@@ -72,22 +70,33 @@ export class BorrowerInformationComponent {
       .then((response) => {
         new Toast('success');
         this.newBorrowerInformation = new BorrowerInformation();
+        
+        this.router.navigate(['/forms/relative-information']);
       })
       .catch((error) => {
         new Toast('error');
       });
   }
 
+  onFileChange(event: any, side: 'front' | 'back'): void {
+    const file = event.target.files[0] as File;
+    if (side === 'front') {
+      this.frontIdCard = file;
+    } else if (side === 'back') {
+      this.backIdCard = file;
+    }
+  }
+
   scanInformation(): void {
-    const imagePaths: string[] = [];
+    const formData = new FormData();
     if (this.frontIdCard) {
-      imagePaths.push(this.frontIdCard); 
+      formData.append('imagePaths', this.frontIdCard, this.frontIdCard.name);
     }
     if (this.backIdCard) {
-      imagePaths.push(this.backIdCard); 
+      formData.append('imagePaths', this.backIdCard, this.backIdCard.name);
     }
-  
-    this.scanService.Scan(imagePaths)
+
+    this.scanService.Scan(formData)
       .then(response => {
         console.log('Scan thành công:', response.data);
       })

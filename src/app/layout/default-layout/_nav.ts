@@ -4,13 +4,13 @@ export const navItems: INavData[] = [
   {
     name: 'Home',
     url: '/home',
-    iconComponent: { name: 'cil-speedometer' },
+    iconComponent: { name: 'cil-home' },
   },
 
   {
     name: 'Tất cả các khoản cho vay',
     url: '/all-loans',
-    iconComponent: { name: 'cil-notes' },
+    iconComponent: { name: 'cil-list' },
   },
   {
     name: 'Thêm khoản vay',
@@ -49,5 +49,10 @@ export const navItems: INavData[] = [
         icon: 'nav-icon-bullet',
       },
     ],
-  }
+  },
+  {
+    name: 'Setting',
+    url: '/all-loans',
+    iconComponent: { name: 'cil-settings' }, 
+  },
 ];

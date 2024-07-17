@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ScanService {
-    Scan(imagePaths: string[]): Promise<any> {
-        return axios.post<any>(
-            'http://localhost:5219/api/ScanInformation',
-            { imagePaths: imagePaths }
-        );
-    }
+  Scan(formData: FormData): Promise<any> {
+    return axios.post<any>(
+      'http://localhost:5219/api/ScanInformation',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    );
+  }
 }

@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { Toast } from '../../../shared/service/toast.service';
+import { TilleComponent } from '../../tille/tille.component';
+import { Router } from '@angular/router';
 
 import {
   RowComponent,
@@ -65,7 +67,7 @@ class BorrowerInformation {
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    
+    TilleComponent,
     FormControlDirective,
     ReactiveFormsModule,
     FormsModule,
@@ -86,6 +88,9 @@ export class LoanInformationComponent {
   BorrowerInformationList: BorrowerInformation[] = [];
   @Output() nextTab: EventEmitter<number> = new EventEmitter<number>();
 
+  content = "Thêm thông tin khoản vay";
+  title = "Bạn hãy thêm thông tin cơ bản ở dưới from.Những ô nào có (*) thì bắt buộc phải nhập đủ.";
+
   loanForm: FormGroup; // Khai báo form group
   //Mục đích: Dùng để nhóm các điều khiển (form controls)
   //lại với nhau, giúp quản lý trạng thái và giá trị
@@ -93,7 +98,7 @@ export class LoanInformationComponent {
   //Khởi tạo: FormGroup thường được khởi tạo trong
   //constructor của lớp bằng cách sử dụng FormBuilder.
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router:Router) {
     this.loanForm = this.fb.group({
       borrowerId: '',
       startDate: [''], // Khởi tạo form control startDate với giá trị mặc định là rỗng(startDate là formControlName)
@@ -194,10 +199,10 @@ export class LoanInformationComponent {
     const duration = this.loanForm.get('duration')?.value;
     const isInstallment = this.loanForm.get('isInstallment')?.value;
     if (loanAmount && interestRate && duration) {
-      if (isInstallment  == 0) {
+      if (isInstallment == 0) {
         const interest = loanAmount * (interestRate / 100) * duration;
         this.loanForm.get('interest')?.setValue(interest.toFixed(2));
-      }else{
+      } else {
         // const interest = loanAmount * (interestRate / 100) * duration;
         // this.loanForm.get('interest')?.setValue(interest.toFixed(2));
       }
@@ -248,7 +253,7 @@ export class LoanInformationComponent {
       .then((response) => {
         new Toast('success');
         this.newLoanInformation = new LoanInformation();
-        this.nextTab.emit();
+        this.router.navigate(['/forms/loan-contract']);
       })
       .catch((error) => {
         new Toast('error');

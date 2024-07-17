@@ -7,27 +7,27 @@
       </c-card-header>
       <c-card-body>
         <c-row>
-          <form (ngSubmit)="scanInformation()">
+          <form (ngSubmit)="scanInformation()" enctype="multipart/form-data">
             <div class="row">
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Cccd mặt trước</label>
-                  <input class="form-control" id="basic-form-dob" type="file"
-                    [(ngModel)]="newBorrowerInformation.DateOfBirth" name="dateOfBirth">
+                  <label class="form-label" for="frontIdCard">CCCD mặt trước</label>
+                  <input class="form-control" id="frontIdCard" type="file" (change)="onFileChange($event, 'front')"
+                    accept="image/*">
                 </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Cccd mặt sau</label>
-                  <input class="form-control" id="basic-form-dob" type="file"
-                    [(ngModel)]="newBorrowerInformation.DateOfBirth" name="dateOfBirth">
+                  <label class="form-label" for="backIdCard">CCCD mặt sau</label>
+                  <input class="form-control" id="backIdCard" type="file" (change)="onFileChange($event, 'back')"
+                    accept="image/*">
                 </div>
-                
               </div>
             </div>
-
+          
             <button class="btn btn-primary" type="submit">Submit</button>
           </form>
+          
         </c-row>
 
       </c-card-body>
@@ -122,17 +122,19 @@
                 <div class="mb-3">
                   <label class="form-label">Ảnh CCCD mặt trước(*)</label>
                   <input class="form-control" type="file"
-                  (change)="onFileSelected($event, 'ImageFront')" name="ImageFront" [(ngModel)]="newBorrowerInformation.ImageFront">
-                  <div *ngIf="selectedImageMap['ImageFront']">
-                    <div style="position: relative; display: inline-block;">
-                      <img [src]="selectedImageMap['ImageFront']" alt="Selected Image" style="width: 50%;">
-                      <button (click)="clearSelectedImage('ImageFront')"
-                        style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
-                        <span style="color: red; font-size: 20px;">×</span>
-                      </button>
-                    </div>
-                  </div>
+                         (change)="onFileSelected($event, 'ImageFront')" name="ImageFront" [(ngModel)]="newBorrowerInformation.ImageFront">
+                         <div *ngIf="selectedImageMap['ImageFront']">
+                          <div style="position: relative; display: inline-block;">
+                            <img [src]="selectedImageMap['ImageFront']" alt="Selected Image" style="width: 50%;">
+                            <button (click)="clearSelectedImage('ImageFront')"
+                                    style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                              <span style="color: red; font-size: 20px;">×</span>
+                            </button>
+                          </div>
+                        </div>
+                        
                 </div>
+                
                 <div class="mb-3">
                   <label class="form-label">Ảnh CCCD mặt sau(*)</label>
                   <input class="form-control" type="file" (change)="onFileSelected($event, 'ImageBack')" [(ngModel)]="newBorrowerInformation.ImageBack"
@@ -164,8 +166,6 @@
                     </button>
                   </div>
                 </div>
-
-
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-textarea">Note</label>
                   <textarea class="form-control" id="basic-form-textarea" rows="2" placeholder="Note"
