@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DocsExampleComponent } from '@docs-components/public-api';
 import { RowComponent, ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective } from '@coreui/angular';
 import { NgxPaginationModule } from 'ngx-pagination';
 
@@ -8,7 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     templateUrl: './tables.component.html',
     styleUrls: ['./tables.component.scss'],
     standalone: true,
-    imports: [RowComponent,  NgxPaginationModule,ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective]
+    imports: [RowComponent,  NgxPaginationModule,ColComponent, TextColorDirective, CardComponent, CardHeaderComponent, CardBodyComponent,  TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective]
 })
 export class TablesComponent {
 
