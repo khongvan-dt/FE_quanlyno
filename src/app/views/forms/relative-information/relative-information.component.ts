@@ -27,8 +27,8 @@ import {
 import axios from 'axios';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UploadService } from '../../../upload.service';
-import { Toast } from '../../../toast';
+import { UploadService } from '../../../shared/service/upload.service';
+import { Toast } from '../../../shared/service/toast.service';
 
 class RelativeInformation {
   borrowerId?: number;

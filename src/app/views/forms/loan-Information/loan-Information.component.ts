@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
-import { Toast } from '../../../toast';
+import { Toast } from '../../../shared/service/toast.service';
 
 import {
   RowComponent,
