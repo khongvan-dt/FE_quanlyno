@@ -29,10 +29,7 @@ export const routes: Routes = [
         path: 'forms',
         loadChildren: () => import('./views/forms/routes').then((m) => m.routes)
       },
-      {
-        path: 'icons',
-        loadChildren: () => import('./views/icons/routes').then((m) => m.routes)
-      },
+      
       {
         path: 'pages',
         loadChildren: () => import('./views/pages/routes').then((m) => m.routes)
