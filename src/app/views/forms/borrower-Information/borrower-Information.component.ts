@@ -9,6 +9,7 @@ import { BorrowerInformation } from '../../../shared/model/BorrowerInformation';
 import { BorrowerService } from '../../../shared/service/borrower.service';
 import { ScanService } from '../../../shared/service/scan.sevice';
 import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 
 import {
   RowComponent,
@@ -104,15 +105,19 @@ export class BorrowerInformationComponent {
         console.error('Lỗi khi scan:', error);
       });
   }
-  
+ 
   onFileSelected(event: any, key: string): void {
     const urlLinlApi = 'http://localhost:5219/api/BorrowerInformation/upload';
     this.uploadService.onFileSelected(event, key, urlLinlApi);
-    this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];
+    setTimeout(() => {
+      this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];
+    }, 200);
   }
 
   clearSelectedImage(key: string): void {
     this.uploadService.clearSelectedImage(key);
     this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];
   }
+
+  
 }
