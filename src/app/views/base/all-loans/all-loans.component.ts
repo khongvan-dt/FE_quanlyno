@@ -21,28 +21,8 @@ import axios from 'axios';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AllLoanService } from '../../../shared/service/allLoan.service';
+import { AllLoan } from 'src/app/shared/model/AllLoan';
 
-class AllLoan {
-  userId: string = '';
-  phoneNumber: string = '';
-  fullName: string = '';
-  loanInformationName: string = '';
-  loanType: string = '';
-  loanPurpose: string = '';
-  loanAmount: number = 0;
-  interestRate: number = 0;
-  loanTerm: number = 0;
-  hometown: string = '';
-  address: string = '';
-  note: string = '';
-  email: string = '';
-  gender: string = '';
-  identityCardNumber: number = 0;
-  isInstallment: boolean | undefined;
-  relativeFullName: string = '';
-  relativePhoneNumber: string = '';
-  loanDone: number = 0;
-}
 
 @Component({
   selector: 'app-all-loans',
@@ -77,26 +57,6 @@ export class AllLoansComponent {
     this.getAllLoans();
   }
 
-  // getAllLoan(): void {
-  //   const token = this.getToken();
-  //   if (token) {
-  //     const userId = this.getUserIdFromToken(token);
-  //     const headers = {
-  //       Authorization: 'Bearer ' + token,
-  //     };
-
-  //     axios
-  //       .get<AllLoan[]>(`http://localhost:5219/api/BorrowerInformation`, {
-  //         headers,
-  //       })
-  //       .then((response) => {
-  //         this.AllLoanList = response.data;
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error fetching AllLoan list:', error);
-  //       });
-  //   }
-  // }
   getAllLoans(): void {
     this.allLoanService.getAllLoan()
       .then((allLoans) => {

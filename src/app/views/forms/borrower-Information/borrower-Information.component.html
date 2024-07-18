@@ -1,7 +1,7 @@
 <app-tille *ngIf="content || title" [content]="content" [title]="title"></app-tille>
 <c-row>
   <c-col xs="12">
-    <c-card class="mb-4">
+    <!-- <c-card class="mb-4">
       <c-card-header ngPreserveWhitespaces>
         <strong>Quét thông tin (Scan information)</strong>
       </c-card-header>
@@ -32,7 +32,7 @@
 
       </c-card-body>
 
-    </c-card>
+    </c-card> -->
 
 
 
@@ -49,7 +49,7 @@
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-name">Họ và tên(*)</label>
                   <input class="form-control" id="basic-form-name" type="text" placeholder="Họ và tên người vay"
-                    [(ngModel)]="newBorrowerInformation.FullName" name="fullName">
+                    [(ngModel)]="newBorrowerInformation.fullName" name="fullName">
                 </div>
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-name">Trả hết nợ chưa(*)</label>

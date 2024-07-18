@@ -16,8 +16,8 @@
                   <select class="form-select" id="borrower-name" formControlName="borrowerId"
                     aria-label="Default select example">
                     <option selected disabled>Chọn tên người vay</option>
-                    <option *ngFor="let borrower of BorrowerInformationList" [value]="borrower.id">{{ borrower.fullName
-                      }}</option>
+                    <option *ngFor="let borrower of BorrowerInformationList" [value]="borrower.id">{{
+                      borrower.fullName}}</option>
                   </select>
                 </div>
                 <div class="mb-3">
@@ -71,8 +71,8 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="loan-duration">Thời hạn vay (ngày)</label>
-                  <input class="form-control" id="loan-duration" type="number" name="loanTerm" readonly
+                  <label class="form-label" for="loan-duration">Thời hạn vay (tháng)</label>
+                  <input class="form-control" id="loan-duration" type="number" name="loanTerm" readonly placeholder="Số tháng vay"
                     formControlName="duration">
                 </div>
                 <div class="mb-3" style="padding-top: 12px;">
@@ -90,16 +90,20 @@
                     </div>
                   </div>
                 </div>
+                
+
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Tiền lãi 1 tháng</label>
-                  <input class="form-control" id="basic-form-dob" formControlName="interest" type="number"
-                    placeholder="Tiền lãi 1 tháng">
+                  <label class="form-label" for="basic-form-dob">Tiền trả 1 tháng(Vay trả lãi định kỳ)</label>
+                  <input class="form-control" id="basic-form-dob" formControlName="interest" type="number" readonly
+                    placeholder="Tiền trả 1 tháng">
                 </div>
+
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Số tiền gốc trả góp mỗi tháng</label>
+                  <label class="form-label" for="basic-form-dob">Tiền trả 1 tháng(Vay trả góp mỗi tháng)</label>
                   <input class="form-control" id="basic-form-dob" type="number" name="monthlyPayment"
-                    formControlName="monthlyPayment" placeholder="Trả góp mỗi tháng bao nhiêu?">
+                    formControlName="monthlyPayment" readonly placeholder="Trả góp mỗi tháng bao nhiêu?">
                 </div>
+
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-textarea">Note</label>
                   <textarea class="form-control" id="basic-form-textarea" rows="2" formControlName="note" name="note"
