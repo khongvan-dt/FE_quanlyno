@@ -9,7 +9,7 @@ import { getToken, getUserIdFromToken } from './token.service';
 export class LoanInformationService {
     addLoanInformation(newLoanInformation: LoanInformation): Promise<any> {
         const headers = {
-            Authorization: 'Bearer' + localStorage.getItem('token')
+            Authorization: 'Bearer ' + localStorage.getItem('token')
         };
         return axios.post<any>(
             'http://localhost:5219/api/LoanInformation',

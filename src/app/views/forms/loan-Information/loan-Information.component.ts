@@ -79,9 +79,9 @@ export class LoanInformationComponent {
   constructor(private fb: FormBuilder, private router: Router, private borrowerService: BorrowerService, private loanInformationService: LoanInformationService) {
     this.loanForm = this.fb.group({
       borrowerId: '',
-      startDate: [''], // Khởi tạo form control startDate với giá trị mặc định là rỗng(startDate là formControlName)
-      endDate: [''], // Khởi tạo form control endDate với giá trị mặc định là rỗng
-      duration: [{ value: '', disabled: true }],
+      loanDate: '', // Khởi tạo form control loanDate với giá trị mặc định là rỗng(startDate là formControlName)
+      repaymentDate: '', // Khởi tạo form control repaymentDate với giá trị mặc định là rỗng
+      loanTerm: [{ value: 0, disabled: true }],
       // Khởi tạo form control duration và
       //disabled: true có nghĩa là form control duration sẽ bị
       //vô hiệu hóa (disabled) khi form được khởi tạo.người dùng không thể nhập được ô iput
@@ -92,64 +92,55 @@ export class LoanInformationComponent {
       loanAmount: '', // Thêm FormControl loanAmount vào FormGroup
       interestRate: '', // Thêm FormControl interestRate vào FormGroup
       isInstallment: '', // Thêm FormControl isInstallment vào FormGroup
-      interest: [{ value: '', disabled: true }], // Thêm FormControl interest vào FormGroup
-      monthlyPayment: [{ value: '', disabled: true }], // Thêm FormControl monthlyPayment vào FormGroup
+      interest: [{ value: 0, disabled: true }], // Thêm FormControl interest vào FormGroup
+      monthlyPayment: [{ value: 0, disabled: true }], // Thêm FormControl monthlyPayment vào FormGroup
       note: '', // Thêm FormControl note vào FormGroup
     });
   }
   ngOnInit(): void {
     this.getBorrowerInformation();
-
-    // Lắng nghe sự thay đổi của form control startDate
-    this.loanForm.get('startDate')?.valueChanges.subscribe(() => {
-      this.calculateDuration(); // Gọi hàm tính toán thời hạn khi giá trị thay đổi
+    this.loanForm.get('loanDate')?.valueChanges.subscribe(() => {
+      this.calculateDuration();
     });
-
-    // Lắng nghe sự thay đổi của form control endDate
-    this.loanForm.get('endDate')?.valueChanges.subscribe(() => {
-      this.calculateDuration(); // Gọi hàm tính toán thời hạn khi giá trị thay đổi
+    this.loanForm.get('repaymentDate')?.valueChanges.subscribe(() => {
+      this.calculateDuration();
     });
     this.loanForm.get('loanAmount')?.valueChanges.subscribe(() => {
       this.calculateInterest();
     });
-
     this.loanForm.get('interestRate')?.valueChanges.subscribe(() => {
       this.calculateInterest();
     });
-
-    this.loanForm.get('duration')?.valueChanges.subscribe(() => {
+    this.loanForm.get('loanTerm')?.valueChanges.subscribe(() => {
       this.calculateInterest();
     });
+    this.loanForm.get('isInstallment')?.valueChanges.subscribe(()=>{
+      this.calculateInterest();
+    })
   }
 
   getBorrowerInformation(): void {
     this.borrowerService.getBorrowerInformation()
       .then((listBorrower) => {
         this.BorrowerInformationList = listBorrower;
-        console.log(this.BorrowerInformationList)
       })
       .catch((error) => {
         console.error('Error fetching Borrower list:', error);
       });
   }
-
-
   calculateDuration(): void {
-    const startDate = this.loanForm.get('startDate')?.value;
-    const endDate = this.loanForm.get('endDate')?.value;
-
+    const startDate = this.loanForm.get('loanDate')?.value;
+    const endDate = this.loanForm.get('repaymentDate')?.value;
     if (startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
       const days = differenceInDays(end, start);
-
       if (days >= 0) {
         const roundedMonths = customRound(days / 30);
-        this.loanForm.get('duration')?.setValue(roundedMonths);
+        this.loanForm.get('loanTerm')?.setValue(roundedMonths);
       } else {
-        this.loanForm.get('duration')?.setValue(0);
+        this.loanForm.get('loanTerm')?.setValue(0);
       }
-
       //days >= 0: Kiểm tra xem giá trị của days có lớn hơn hoặc bằng 0 không.
       //?: Đây là phần của toán tử điều kiện, nếu điều kiện days >= 0 đúng
       //thì thực hiện biểu thức sau dấu ?.
@@ -158,43 +149,68 @@ export class LoanInformationComponent {
       //0: Nếu điều kiện days >= 0 là sai (false), giá trị 0 sẽ được dùng.
     }
   }
-
-  // Phương thức tính toán lãi suất và các giá trị liên quan
+  // Phương thức tính toán lãi suất 
   calculateInterest(): void {
     const loanAmount = this.loanForm.get('loanAmount')?.value;
     const interestRate = this.loanForm.get('interestRate')?.value;
-    const duration = this.loanForm.get('duration')?.value;
+    const duration = this.loanForm.get('loanTerm')?.value;
     const isInstallment = this.loanForm.get('isInstallment')?.value;
-
+  
     if (isInstallment == 0) {
+      this.loanForm.get('interest')?.setValue('');
       if (loanAmount && interestRate && duration) {
-        const monthlyInterestRate = interestRate/ 100 / 12;
+        const monthlyInterestRate = interestRate / 100 / 12;
         const powerTerm = Math.pow(1 + monthlyInterestRate, duration);
         const monthlyPayment = (loanAmount * monthlyInterestRate * powerTerm) / (powerTerm - 1);
-        this.loanForm.get('monthlyPayment')?.setValue(monthlyPayment.toFixed(3));
+        this.loanForm.get('monthlyPayment')?.setValue(monthlyPayment.toFixed(0));
+      } else {
+        this.loanForm.get('monthlyPayment')?.setValue('');
       }
-    }
-    if (isInstallment == 1) {
+    } else if (isInstallment == 1) {
+      this.loanForm.get('monthlyPayment')?.setValue('');
+  
       if (loanAmount && interestRate && duration) {
         const monthlyInterestRate = interestRate / 12;
-        console.log(monthlyInterestRate);
-        const interest = loanAmount * monthlyInterestRate/100;
-        this.loanForm.get('interest')?.setValue(interest.toFixed(3));
+        const interest = loanAmount * monthlyInterestRate / 100;
+        this.loanForm.get('interest')?.setValue(interest.toFixed(0));
+      } else {
+        this.loanForm.get('interest')?.setValue('');
       }
     }
   }
-
+  
+ 
   addLoanInformation(): void {
-    this.loanInformationService.addLoanInformation(this.newLoanInformation)
-      .then((response) => {
-        new Toast('success');
-        this.newLoanInformation = new LoanInformation();
-        this.router.navigate(['/forms/loan-contract']);
-      })
-      .catch((error) => {
-        new Toast('error');
-      });
+    try {
+      this.loanForm.get('interest')?.enable(); 
+      this.loanForm.get('monthlyPayment')?.enable(); 
+      this.loanForm.get('loanTerm')?.enable(); 
+  
+      this.newLoanInformation = {
+        ...this.loanForm.value,
+        borrowerId: this.loanForm.get('borrowerId')?.value * 1,
+        interest: this.loanForm.get('interest')?.value * 1,
+        monthlyPayment: this.loanForm.get('monthlyPayment')?.value * 1
+      };
+      
+      console.log(this.newLoanInformation); // Debug: Check data before sending
+  
+      this.loanInformationService.addLoanInformation(this.newLoanInformation)
+        .then((response) => {
+          new Toast('success');
+          this.newLoanInformation = new LoanInformation();
+          this.router.navigate(['/forms/loan-contract']);
+        })
+        .catch((error) => {
+          new Toast('error');
+          console.log('Error:', error); // Debug: Check error details
+        });
+    } catch (error) {
+      console.error('Unexpected error:', error); // Debug: Handle unexpected errors
+    }
   }
+  
+  
 }
 
 function customRound(number: number): number {

@@ -51,7 +51,7 @@
                 </div>
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-dob">Lãi suất/năm (%)</label>
-                  <input class="form-control" id="basic-form-dob" formControlName="interestRate" type="number"
+                  <input class="form-control" id="basic-form-dob" formControlName="interestRate" type="number" name="interestRate"
                     placeholder="Lãi xuất 1 năm (%)">
                 </div>
 
@@ -61,19 +61,19 @@
                 <div class="row">
                   <div class="mb-3 col-6">
                     <label class="form-label" for="loan-start-date">Ngày vay</label>
-                    <input class="form-control" id="loan-start-date" formControlName="startDate" type="date"
+                    <input class="form-control" id="loan-start-date" formControlName="loanDate" type="date"
                       name="loanDate">
                   </div>
                   <div class="mb-3 col-6">
                     <label class="form-label" for="loan-end-date">Ngày trả</label>
                     <input class="form-control" id="loan-end-date" type="date" name="repaymentDate"
-                      formControlName="endDate">
+                      formControlName="repaymentDate">
                   </div>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="loan-duration">Thời hạn vay (tháng)</label>
-                  <input class="form-control" id="loan-duration" type="number" name="loanTerm" readonly placeholder="Số tháng vay"
-                    formControlName="duration">
+                  <label class="form-label" for="loan-loanTerm">Thời hạn vay (tháng)</label>
+                  <input class="form-control" id="loan-loanTerm" type="number" name="loanTerm" readonly placeholder="Số tháng vay"
+                    formControlName="loanTerm">
                 </div>
                 <div class="mb-3" style="padding-top: 12px;">
                   <label class="form-label" for="basic-form-dob">Kiểu vay</label>
