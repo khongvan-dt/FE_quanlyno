@@ -31,30 +31,11 @@ import { FormsModule } from '@angular/forms';
 import { UploadService } from '../../../shared/service/upload.service';
 import { Toast } from '../../../shared/service/toast.service';
 import { Router } from '@angular/router';
+import { BorrowerInformation } from 'src/app/shared/model/BorrowerInformation';
+import { BorrowerService } from '../../../shared/service/borrower.service';
+import { RelativeInformation } from '../../../shared/model/RelativeInformation';
+import { RelativeInformationservice } from '../../../shared/service/relativeInformation.service';
 
-class RelativeInformation {
-  borrowerId?: number;
-  fullName: string = '';
-  phoneNumber: string = '';
-  email?: string;
-  identityCardNumber: string = '';
-  dateOfIssue?: Date;
-  placeOfIssue?: string;
-  gender: number = 0;
-  dateOfBirth?: Date;
-  hometown: string = '';
-  address: string = '';
-  imageBack: string = '';
-  imageFront: string = '';
-  portrait: string = '';
-  note?: string;
-}
-
-class BorrowerInformation {
-  id: number = 0;
-  userId: string = '';
-  fullName: string = '';
-}
 
 @Component({
   selector: 'app-relative-information',
@@ -94,51 +75,24 @@ export class RelativeInformationComponent {
   selectedBorrowerId: number | undefined;
   selectedImageMap: { [key: string]: string | null } = {};
 
-  @Output() nextTab: EventEmitter<number> = new EventEmitter<number>();
-
   newRelativeInformation: RelativeInformation = new RelativeInformation();
   content = "Thêm thông tin người thân của người vay nợ";
   title = "Bạn hãy thêm thông tin cơ bản ở dưới from.Những ô nào có (*) thì bắt buộc phải nhập đủ.";
-  constructor(private uploadService: UploadService, private router:Router) {
+  constructor(private uploadService: UploadService, private router: Router, private borrowerService: BorrowerService, private relativeInformationservice: RelativeInformationservice) {
     this.getBorrowerInformation();
   }
 
   getBorrowerInformation(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const headers = {
-        Authorization: 'Bearer ' + token,
-      };
-      axios
-        .get<BorrowerInformation[]>(
-          `http://localhost:5219/api/BorrowerInformation`,
-          { headers }
-        )
-        .then((response) => {
-          this.BorrowerInformationList = response.data;
-        })
-        .catch((error) => {
-          console.error('Error fetching Borrower Information list:', error);
-        });
-    }
+    this.borrowerService.getBorrowerInformation()
+      .then((listBrorrower) => {
+        this.BorrowerInformationList = listBrorrower;
+      })
+      .catch((error) => {
+        console.error('Error fetching Brorrower list:', error);
+      })
   }
-
-  getUserIdFromToken(token: string): string {
-    const tokenParts = token.split('.');
-    const payload = JSON.parse(atob(tokenParts[1]));
-    return payload.userId;
-  }
-
   addRelativeInformation(): void {
-    const headers = {
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
-    };
-    axios
-      .post<any>(
-        'http://localhost:5219/api/relativeInformation',
-        this.newRelativeInformation,
-        { headers }
-      )
+    this.relativeInformationservice.addRelativeInformation(this.newRelativeInformation)
       .then((response) => {
         new Toast('success');
         this.newRelativeInformation = new RelativeInformation();
@@ -149,19 +103,16 @@ export class RelativeInformationComponent {
       });
   }
 
-  choiserImgFile(event: any, key: string) {
-    const urlLinlApi = 'http://localhost:5219/api/RelativeInformation/upload';
+  onFileSelected(event: any, key: string): void {
+    const urlLinlApi = 'http://localhost:5219/api/BorrowerInformation/upload';
     this.uploadService.onFileSelected(event, key, urlLinlApi);
-    this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];
+    setTimeout(() => {
+      this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];
+    }, 200);
   }
 
   clearSelectedImage(key: string): void {
     this.uploadService.clearSelectedImage(key);
     this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];
-  }
-  handleEnter(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
-      this.addRelativeInformation();
-    }
   }
 }

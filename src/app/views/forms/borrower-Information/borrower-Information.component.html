@@ -59,7 +59,7 @@
                     <option [value]="2">Done</option>
                   </select>
                 </div>
-                
+
 
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-email">Số điện thoại(*)</label>
@@ -119,26 +119,27 @@
                     <option value="1">Nữ</option>
                   </select>
                 </div>
+                
                 <div class="mb-3">
                   <label class="form-label">Ảnh CCCD mặt trước(*)</label>
-                  <input class="form-control" type="file"
-                         (change)="onFileSelected($event, 'ImageFront')" name="ImageFront" [(ngModel)]="newBorrowerInformation.ImageFront">
-                         <div *ngIf="selectedImageMap['ImageFront']">
-                          <div style="position: relative; display: inline-block;">
-                            <img [src]="selectedImageMap['ImageFront']" alt="Selected Image" style="width: 50%;">
-                            <button (click)="clearSelectedImage('ImageFront')"
-                                    style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
-                              <span style="color: red; font-size: 20px;">×</span>
-                            </button>
-                          </div>
-                        </div>
-                        
+                  <input class="form-control" type="file" (change)="onFileSelected($event, 'ImageFront')"
+                    name="ImageFront" [(ngModel)]="newBorrowerInformation.ImageFront">
+                  <div *ngIf="selectedImageMap['ImageFront']">
+                    <div style="position: relative; display: inline-block;">
+                      <img [src]="selectedImageMap['ImageFront']" alt="Selected Image" style="width: 50%;">
+                      <button (click)="clearSelectedImage('ImageFront')"
+                        style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                        <span style="color: red; font-size: 20px;">×</span>
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
-              
+
                 <div class="mb-3">
                   <label class="form-label">Ảnh CCCD mặt sau(*)</label>
-                  <input class="form-control" type="file" (change)="onFileSelected($event, 'ImageBack')" [(ngModel)]="newBorrowerInformation.ImageBack"
-                    name="ImageBack">
+                  <input class="form-control" type="file" (change)="onFileSelected($event, 'ImageBack')"
+                    [(ngModel)]="newBorrowerInformation.ImageBack" name="ImageBack">
                   <div *ngIf="selectedImageMap['ImageBack']">
                     <div style="position: relative; display: inline-block;">
                       <img [src]="selectedImageMap['ImageBack']" alt="Selected Image" style="width: 50%;">
@@ -153,17 +154,19 @@
 
                 <div class="mb-3">
                   <label class="form-label">Ảnh chân dung(*)</label>
-                  <input class="form-control" type="file" (change)="onFileSelected($event, 'Portrait')" name="Portrait" [(ngModel)]="newBorrowerInformation.Portrait">
-                </div>
-                <div *ngIf="selectedImageMap['Portrait']">
-                  <div style="position: relative; display: inline-block;">
-                    <img [src]="selectedImageMap['Portrait']" alt="Selected Image" style="width: 50%;">
-                    <button (click)="clearSelectedImage('Portrait')"
-                      style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
-                      <span style="color: red; font-size: 20px;">×</span>
-                    </button>
+                  <input class="form-control" type="file" (change)="onFileSelected($event, 'Portrait')" name="Portrait"
+                    [(ngModel)]="newBorrowerInformation.Portrait">
+                  <div *ngIf="selectedImageMap['Portrait']">
+                    <div style="position: relative; display: inline-block;">
+                      <img [src]="selectedImageMap['Portrait']" alt="Selected Image" style="width: 50%;">
+                      <button (click)="clearSelectedImage('Portrait')"
+                        style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                        <span style="color: red; font-size: 20px;">×</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
+
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-textarea">Note</label>
                   <textarea class="form-control" id="basic-form-textarea" rows="2" placeholder="Note"
