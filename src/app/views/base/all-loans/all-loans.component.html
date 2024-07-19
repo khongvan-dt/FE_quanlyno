@@ -64,7 +64,7 @@
             </thead>
             <tbody>
               <tr
-                *ngFor="let itemAllLoan of AllLoanList; let i = index"
+                *ngFor="let itemAllLoan of allLoanList; let i = index"
                 [ngClass]="{
                   'table-success': itemAllLoan.loanDone === 1,
                   'table-danger': itemAllLoan.loanDone !== 1

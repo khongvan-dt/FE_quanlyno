@@ -1,6 +1,7 @@
 
 import { Routes } from '@angular/router';
 import { DefaultLoanInformationComponent } from './layout';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,8 @@ export const routes: Routes = [
   {
     path: '',
     component: DefaultLoanInformationComponent,
+    canActivate: [AuthGuard],
+
     data: {
       title: 'Home'
     },
@@ -24,16 +27,12 @@ export const routes: Routes = [
         path: '',
         loadChildren: () => import('./views/base/routes').then((m) => m.routes)
       },
-      
+
       {
         path: 'forms',
         loadChildren: () => import('./views/forms/routes').then((m) => m.routes)
       },
-      
-      {
-        path: 'pages',
-        loadChildren: () => import('./views/pages/routes').then((m) => m.routes)
-      }
+
     ]
   },
   {

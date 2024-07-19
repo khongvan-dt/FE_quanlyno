@@ -19,7 +19,7 @@ import {
   ButtonDirective,
 } from '@coreui/angular';
 import { BorrowerInformationComponent } from '../borrower-Information/borrower-Information.component';
-import { TilleComponent } from 'src/app/tille/tille.component';
+import { TilleComponent } from 'src/app/views/tille/tille.component';
 
 @Component({
   selector: 'app-loan-contract',

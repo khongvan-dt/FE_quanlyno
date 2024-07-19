@@ -1,116 +1,5 @@
-<!-- <c-row>
-  <c-col xs="12">
-    <c-card class="mb-4">
-      <c-card-header ngPreserveWhitespaces>
-        <strong>Thông tin khoản vay (Loan Information)</strong>
-      </c-card-header>
-      <c-card-body>
-        <c-row>
-          <form  (ngSubmit)="addLoanInformation()" [formGroup]="loanForm">
-            <div class="row">
-              <div class="col-12 col-md-6">
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-gender">Người vay</label>
-                  <select class="form-select" id="borrower-name" [(ngModel)]="newLoanInformation.borrowerId"
-                    name="borrowerId" aria-label="Default select example">
-                    <option selected="selected" disabled>Chọn tên người vay</option>
-                    <option *ngFor="let borrowerList of BorrowerInformationList" [value]="borrowerList.id">{{
-                      borrowerList.fullName }}</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-name">Tên khoản vay</label>
-                  <input class="form-control" id="basic-form-name" type="text"
-                    [(ngModel)]="newLoanInformation.loanInformationName" name="loanInformationName"
-                    placeholder="Tên khoản vay(phân biệt giữa các bản)">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-name">Công ty/Người cho vay</label>
-                  <input class="form-control" id="basic-form-name" type="text" placeholder="Tên công ty/Người cho vay"
-                    [(ngModel)]="newLoanInformation.lender" name="lender">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-email">Loại hình vay vốn</label>
-                  <select class="form-select" name="loanType" [(ngModel)]="newLoanInformation.loanType"
-                    aria-label="Default select example">
-                    <option selected="selected" disabled>Chọn</option>
-                    <option value="0">Công ty/doanh nghiệp</option>
-                    <option value="1">Cá nhân</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-password">Mục đích vay vốn </label>
-                  <input class="form-control" id="basic-form-password" [(ngModel)]="newLoanInformation.loanPurpose"
-                    type="text" placeholder="Mục đích vay vốn">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Số tiền vay</label>
-                  <input class="form-control" id="basic-form-dob" [(ngModel)]="newLoanInformation.loanAmount"
-                    type="number" placeholder="Số tiền vay">
-                </div>
+<app-tille *ngIf="content || title" [content]="content" [title]="title"></app-tille>
 
-
-              </div>
-              <div class="col-12 col-md-6">
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Lãi suất/năm (%)</label>
-                  <input class="form-control" id="basic-form-dob" [(ngModel)]="newLoanInformation.interestRate"
-                    type="number" placeholder="Lãi xuất 1 năm (%)">
-                </div>
-                <div >
-                  <div class="row">
-                    <div class="mb-3 col-6">
-                      <label class="form-label" for="loan-start-date">Ngày vay</label>
-                      <input class="form-control" id="loan-start-date" [(ngModel)]="newLoanInformation.loanDate"
-                        type="date" formControlName="startDate">
-                    </div>
-                    <div class="mb-3 col-6">
-                      <label class="form-label" for="loan-end-date">Ngày trả</label>
-                      <input class="form-control" id="loan-end-date" type="date"
-                        [(ngModel)]="newLoanInformation.repaymentDate" formControlName="endDate">
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label" for="loan-duration">Thời hạn vay (ngày)</label>
-                    <input class="form-control" id="loan-duration" type="number"
-                      [(ngModel)]="newLoanInformation.loanTerm" formControlName="duration" readonly>
-                  </div>
-                </div>
-                <div class="mb-3" style="padding-top: 12px;">
-                  <label class="form-label" for="basic-form-dob">Kiểu vay</label>
-                  <div class="row">
-                    <div class="form-check col-3">
-                      <input class="form-check-input" id="flexRadioDefault1" type="radio" name="loanType"
-                        [value]="0">
-                      <label class="form-check-label mb-0" for="flexRadioDefault1">Vay trả góp</label>
-                    </div>
-                    <div class="form-check col-3">
-                      <input class="form-check-input" id="flexRadioDefault2" type="radio" name="loanType"
-                        [value]="1">
-                      <label class="form-check-label mb-0" for="flexRadioDefault2">Vay trả lãi định kỳ</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Số tiền cần trả mỗi tháng</label>
-                  <input class="form-control" id="basic-form-dob" type="number"
-                    placeholder="Trả góp mỗi tháng bao nhiêu?">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-textarea">Note</label>
-                  <textarea class="form-control" id="basic-form-textarea" rows="2" placeholder="Note"></textarea>
-                </div>
-              </div>
-            </div>
-            <button class="btn btn-primary" type="submit">Submit</button>
-          </form>
-        </c-row>
-      </c-card-body>
-    </c-card>
-  </c-col>
-
-</c-row>
- -->
 <c-row>
   <c-col xs="12">
     <c-card class="mb-4">
@@ -127,8 +16,8 @@
                   <select class="form-select" id="borrower-name" formControlName="borrowerId"
                     aria-label="Default select example">
                     <option selected disabled>Chọn tên người vay</option>
-                    <option *ngFor="let borrower of BorrowerInformationList" [value]="borrower.id">{{ borrower.fullName
-                      }}</option>
+                    <option *ngFor="let borrower of BorrowerInformationList" [value]="borrower.id">{{
+                      borrower.fullName}}</option>
                   </select>
                 </div>
                 <div class="mb-3">
@@ -162,7 +51,7 @@
                 </div>
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-dob">Lãi suất/năm (%)</label>
-                  <input class="form-control" id="basic-form-dob" formControlName="interestRate" type="number"
+                  <input class="form-control" id="basic-form-dob" formControlName="interestRate" type="number" name="interestRate"
                     placeholder="Lãi xuất 1 năm (%)">
                 </div>
 
@@ -172,19 +61,19 @@
                 <div class="row">
                   <div class="mb-3 col-6">
                     <label class="form-label" for="loan-start-date">Ngày vay</label>
-                    <input class="form-control" id="loan-start-date" formControlName="startDate" type="date"
+                    <input class="form-control" id="loan-start-date" formControlName="loanDate" type="date"
                       name="loanDate">
                   </div>
                   <div class="mb-3 col-6">
                     <label class="form-label" for="loan-end-date">Ngày trả</label>
                     <input class="form-control" id="loan-end-date" type="date" name="repaymentDate"
-                      formControlName="endDate">
+                      formControlName="repaymentDate">
                   </div>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="loan-duration">Thời hạn vay (ngày)</label>
-                  <input class="form-control" id="loan-duration" type="number" name="loanTerm" readonly
-                    formControlName="duration">
+                  <label class="form-label" for="loan-loanTerm">Thời hạn vay (tháng)</label>
+                  <input class="form-control" id="loan-loanTerm" type="number" name="loanTerm" readonly placeholder="Số tháng vay"
+                    formControlName="loanTerm">
                 </div>
                 <div class="mb-3" style="padding-top: 12px;">
                   <label class="form-label" for="basic-form-dob">Kiểu vay</label>
@@ -201,16 +90,20 @@
                     </div>
                   </div>
                 </div>
+                
+
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Tiền lãi 1 tháng</label>
-                  <input class="form-control" id="basic-form-dob" formControlName="interest" type="number"
-                    placeholder="Tiền lãi 1 tháng">
+                  <label class="form-label" for="basic-form-dob">Tiền trả 1 tháng(Vay trả lãi định kỳ)</label>
+                  <input class="form-control" id="basic-form-dob" formControlName="interest" type="number" readonly
+                    placeholder="Tiền trả 1 tháng">
                 </div>
+
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-dob">Số tiền gốc trả góp mỗi tháng</label>
+                  <label class="form-label" for="basic-form-dob">Tiền trả 1 tháng(Vay trả góp mỗi tháng)</label>
                   <input class="form-control" id="basic-form-dob" type="number" name="monthlyPayment"
-                    formControlName="monthlyPayment" placeholder="Trả góp mỗi tháng bao nhiêu?">
+                    formControlName="monthlyPayment" readonly placeholder="Trả góp mỗi tháng bao nhiêu?">
                 </div>
+
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-textarea">Note</label>
                   <textarea class="form-control" id="basic-form-textarea" rows="2" formControlName="note" name="note"

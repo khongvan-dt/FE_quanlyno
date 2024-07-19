@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { TilleComponent } from '../../tille/tille.component';
 
 import {
   RowComponent,
@@ -29,6 +30,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UploadService } from '../../../shared/service/upload.service';
 import { Toast } from '../../../shared/service/toast.service';
+import { Router } from '@angular/router';
 
 class RelativeInformation {
   borrowerId?: number;
@@ -74,6 +76,7 @@ class BorrowerInformation {
     FormCheckInputDirective,
     ButtonDirective,
     ThemeDirective,
+    TilleComponent,
     DropdownComponent,
     DropdownToggleDirective,
     DropdownMenuDirective,
@@ -94,8 +97,9 @@ export class RelativeInformationComponent {
   @Output() nextTab: EventEmitter<number> = new EventEmitter<number>();
 
   newRelativeInformation: RelativeInformation = new RelativeInformation();
-
-  constructor(private uploadService: UploadService) {
+  content = "Thêm thông tin người thân của người vay nợ";
+  title = "Bạn hãy thêm thông tin cơ bản ở dưới from.Những ô nào có (*) thì bắt buộc phải nhập đủ.";
+  constructor(private uploadService: UploadService, private router:Router) {
     this.getBorrowerInformation();
   }
 
@@ -138,7 +142,7 @@ export class RelativeInformationComponent {
       .then((response) => {
         new Toast('success');
         this.newRelativeInformation = new RelativeInformation();
-        this.nextTab.emit();
+        this.router.navigate(['/forms/loan-information']);
       })
       .catch((error) => {
         new Toast('error');
