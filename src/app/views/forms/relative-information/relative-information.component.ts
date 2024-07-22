@@ -104,7 +104,7 @@ export class RelativeInformationComponent {
   }
 
   onFileSelected(event: any, key: string): void {
-    const urlLinlApi = 'http://localhost:5219/api/BorrowerInformation/upload';
+    const urlLinlApi = 'http://localhost:5219/api/RelativeInformation/upload';
     this.uploadService.onFileSelected(event, key, urlLinlApi);
     setTimeout(() => {
       this.selectedImageMap[key] = this.uploadService.selectedImageMap[key];

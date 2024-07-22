@@ -1,4 +1,5 @@
 export class LoanInformation {
+  id: number = 0; 
   userId: string = '';
   loanInformationName: string = ''; // tên
   borrowerId?: number;  // Mã người vay (liên kết với bảng BorrowerInformation)
