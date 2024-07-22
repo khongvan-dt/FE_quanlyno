@@ -21,6 +21,7 @@
                 class="form-select"
                 id="basic-form-gender"
                 aria-label="Default select example"
+                name="borrowerInformationId"
                 [(ngModel)]="newLoanRepayment.borrowerInformationId"
               >
                 <option selected="selected">Chọn tên người vay</option>
@@ -41,6 +42,7 @@
                 id="basic-form-gender"
                 aria-label="Default select example"
                 [(ngModel)]="newLoanRepayment.loanInformationId"
+                name="loanInformationId"
               >
                 <option selected="selected">Chọn thông tin khoản vay</option>
                 <option
@@ -60,6 +62,7 @@
                 class="form-control"
                 id="basic-form-name"
                 type="number"
+                name="amountPaid"
                 placeholder="Số tiền đã trả"
               />
             </div>
@@ -71,6 +74,7 @@
                 id="basic-form-name"
                 type="date"
                 [(ngModel)]="newLoanRepayment.paymentDate"
+                name="paymentDate"
               />
             </div>
             <div class="mb-3">
@@ -81,6 +85,7 @@
                 id="basic-form-textarea"
                 rows="2"
                 placeholder="Note"
+                name="note"
               ></textarea>
             </div>
             <button class="btn btn-primary" type="submit">Submit</button>

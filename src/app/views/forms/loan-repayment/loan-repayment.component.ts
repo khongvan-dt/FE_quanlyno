@@ -52,6 +52,14 @@ import { Router } from '@angular/router';
   ],
 })
 export class LoanRepaymentComponent {
+  newLoanRepayment: LoanRepayment = new LoanRepayment();
+  borrowerInformationList: BorrowerInformation[] = [];
+  LoanInformationList: LoanInformation[] = [];
+
+  content = 'Thêm khoản trả góp';
+  title =
+    'Bạn hãy thêm thông tin cơ bản ở dưới form. Những ô nào có (*) thì bắt buộc phải nhập đủ.';
+
   constructor(
     private borrowerService: BorrowerService,
     private loanInformationService: LoanInformationService,
@@ -61,13 +69,7 @@ export class LoanRepaymentComponent {
     this.getBorrowerInformation();
     this.getLoanInformation();
   }
-  newLoanRepayment: LoanRepayment = new LoanRepayment();
-  borrowerInformationList: BorrowerInformation[] = [];
-  LoanInformationList: LoanInformation[] = [];
 
-  content = 'Thêm khoản trả góp';
-  title =
-    'Bạn hãy thêm thông tin cơ bản ở dưới from.Những ô nào có (*) thì bắt buộc phải nhập đủ.';
   getLoanInformation(): void {
     this.loanInformationService
       .getLoanInformation()
@@ -78,6 +80,7 @@ export class LoanRepaymentComponent {
         console.error('Error retrieving Loan information:', error);
       });
   }
+
   getBorrowerInformation(): void {
     console.log(this.newLoanRepayment);
 
@@ -87,10 +90,12 @@ export class LoanRepaymentComponent {
         this.borrowerInformationList = listBorrower;
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Error retrieving Borrower information:', error);
       });
   }
+
   addLoanRepayment(): void {
+
     this.loanRepaymentService
       .addLoanRepayment(this.newLoanRepayment)
       .then((response) => {
