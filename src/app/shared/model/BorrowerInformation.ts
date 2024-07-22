@@ -1,5 +1,5 @@
 export class BorrowerInformation {
-  id : number = 0;
+  id: number=0;
   UserId: string = '';
   fullName: string = '';
   PhoneNumber: string = '';
