@@ -77,14 +77,19 @@ export class AllLoansComponent {
       const confirmed = await Toast.confirmDelete();
       if (confirmed) {
         await this.borrowerService.deleteBorrower(id);
-        new Toast('success').successDeleted(true);
+        console.log(`Deleted Loan with id ${id}`);
+        const toast = new Toast('success');
+        toast.successDeleted(true);  
         this.getAllLoans();
       } else {
         new Toast('info');
       }
     } catch (error) {
       console.error(`Error deleting Loan with id ${id}:`, error);
-      new Toast('error').successDeleted(false);
+      const toast = new Toast('error');
+      toast.successDeleted(false);
     }
   }
+
+
 }
