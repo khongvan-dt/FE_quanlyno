@@ -1,4 +1,8 @@
-<app-tille *ngIf="content || title" [content]="content" [title]="title"></app-tille>
+<app-tille
+  *ngIf="content || title"
+  [content]="content"
+  [title]="title"
+></app-tille>
 
 <c-row>
   <c-col xs="12">
@@ -8,41 +12,81 @@
       </c-card-header>
       <c-card-body>
         <c-row>
-          <form>
+          <form (ngSubmit)="addLoanRepayment()">
             <div class="mb-3">
-              <label class="form-label" for="basic-form-gender">Người vay</label>
-              <select class="form-select" id="basic-form-gender" aria-label="Default select example">
+              <label class="form-label" for="basic-form-gender"
+                >Người vay</label
+              >
+              <select
+                class="form-select"
+                id="basic-form-gender"
+                aria-label="Default select example"
+                [(ngModel)]="newLoanRepayment.borrowerInformationId"
+              >
                 <option selected="selected">Chọn tên người vay</option>
-                <option value="0">người 1</option>
-                <option value="1">người 2</option>
+                <option
+                  *ngFor="let borrower of borrowerInformationList"
+                  [value]="borrower.id"
+                >
+                  {{ borrower.fullName }}
+                </option>
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="basic-form-gender">Thông tin khoản vay</label>
-              <select class="form-select" id="basic-form-gender" aria-label="Default select example">
+              <label class="form-label" for="basic-form-gender"
+                >Thông tin khoản vay</label
+              >
+              <select
+                class="form-select"
+                id="basic-form-gender"
+                aria-label="Default select example"
+                [(ngModel)]="newLoanRepayment.loanInformationId"
+              >
                 <option selected="selected">Chọn thông tin khoản vay</option>
-                <option value="0">Khoản vay 1</option>
-                <option value="1">Khoản vay 2</option>
+                <option
+                  *ngFor="let loanInformation of LoanInformationList"
+                  [value]="loanInformation.id"
+                >
+                  {{ loanInformation.loanInformationName }}
+                </option>
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="basic-form-name">Số tiền đã trả</label>
-              <input class="form-control" id="basic-form-name" type="number" placeholder="Số tiền đã trả">
+              <label class="form-label" for="basic-form-name"
+                >Số tiền đã trả</label
+              >
+              <input
+                [(ngModel)]="newLoanRepayment.amountPaid"
+                class="form-control"
+                id="basic-form-name"
+                type="number"
+                placeholder="Số tiền đã trả"
+              />
             </div>
+
             <div class="mb-3">
               <label class="form-label" for="basic-form-name">Ngày trả</label>
-              <input class="form-control" id="basic-form-name" type="date" >
+              <input
+                class="form-control"
+                id="basic-form-name"
+                type="date"
+                [(ngModel)]="newLoanRepayment.paymentDate"
+              />
             </div>
             <div class="mb-3">
               <label class="form-label" for="basic-form-textarea">Note</label>
-              <textarea class="form-control" id="basic-form-textarea" rows="2" placeholder="Note"></textarea>
+              <textarea
+                class="form-control"
+                [(ngModel)]="newLoanRepayment.note"
+                id="basic-form-textarea"
+                rows="2"
+                placeholder="Note"
+              ></textarea>
             </div>
-
             <button class="btn btn-primary" type="submit">Submit</button>
           </form>
         </c-row>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>

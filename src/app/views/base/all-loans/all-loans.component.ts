@@ -79,7 +79,7 @@ export class AllLoansComponent {
         await this.borrowerService.deleteBorrower(id);
         console.log(`Deleted Loan with id ${id}`);
         const toast = new Toast('success');
-        toast.successDeleted(true);  
+        toast.successDeleted(true);
         this.getAllLoans();
       } else {
         new Toast('info');
@@ -90,6 +90,4 @@ export class AllLoansComponent {
       toast.successDeleted(false);
     }
   }
-
-
 }
