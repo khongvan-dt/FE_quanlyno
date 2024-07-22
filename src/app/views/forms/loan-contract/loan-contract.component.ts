@@ -1,4 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   FormControl,
   UntypedFormBuilder,
@@ -19,7 +20,11 @@ import {
   ButtonDirective,
 } from '@coreui/angular';
 import { BorrowerInformationComponent } from '../borrower-Information/borrower-Information.component';
-import { TilleComponent } from 'src/app/views/tille/tille.component';
+import { TilleComponent } from '../../tille/tille.component';
+import { BorrowerService } from '../../../shared/service/borrower.service';
+import { BorrowerInformation } from 'src/app/shared/model/BorrowerInformation';
+import {LoanContract  } from '../../../shared/model/LoanContract';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-loan-contract',
@@ -35,37 +40,33 @@ import { TilleComponent } from 'src/app/views/tille/tille.component';
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    
     FormCheckComponent,
     FormCheckInputDirective,
     FormCheckLabelDirective,
     ButtonGroupComponent,
     ButtonDirective,
-    TilleComponent
+    TilleComponent,
+    FormsModule,
+    CommonModule,
   ],
 })
-
-export class LoanContractComponent implements AfterViewInit {
-
-  @ViewChild(BorrowerInformationComponent)
-  private borrowerInfoComponent!: BorrowerInformationComponent;
-  content="Thông tin tất cả các khoản vay(Information on all loans)";
-  title = "Bạn có thể xem được thông tin tất cả các khoản vay ở đây.";
-  ngAfterViewInit() {
-    if (!this.borrowerInfoComponent) {
-      console.error('BorrowerInformationComponent is not initialized.');
-    }
+export class LoanContractComponent {
+  content = 'Thêm thông tin hợp đồng khoản vay';
+  title =
+    'Bạn hãy thêm thông tin cơ bản ở dưới from.Những ô nào có (*) thì bắt buộc phải nhập đủ. Ảnh chụp rõ nét để có dữ liệu lưu trữ.';
+  BorrowerInformationList: BorrowerInformation[] = [];
+  newLoanContract:LoanContract =new LoanContract();
+  constructor(private borrowerService: BorrowerService) {
+    this.getBorrowerInformation();
   }
-
-  handleSubmit() {
-    console.log('Submitting loan contract form...');
-    if (this.borrowerInfoComponent) {
-      try {
-        this.borrowerInfoComponent.addBorrowerInformation();
-        console.log('Borrower information added successfully.');
-      } catch (error) {
-        console.error('Failed to add borrower information:', error);
-      }
-    }
+  getBorrowerInformation(): void {
+    this.borrowerService
+      .getBorrowerInformation()
+      .then((listBrorrower) => {
+        this.BorrowerInformationList = listBrorrower;
+      })
+      .catch((error) => {
+        console.error('Error retrieving borrower information:', error);
+      });
   }
 }

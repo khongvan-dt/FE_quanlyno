@@ -1,5 +1,4 @@
 <app-tille *ngIf="content || title" [content]="content" [title]="title"></app-tille>
-
 <c-row>
   <c-col xs="12">
     <c-card class="mb-4">
@@ -13,10 +12,9 @@
               <div class="col-12 col-md-6">
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-gender">Người vay</label>
-                  <select class="form-select" id="basic-form-gender" aria-label="Default select example">
-                    <option selected="selected">Chọn tên người vay</option>
-                    <option value="0">người 1</option>
-                    <option value="1">người 2</option>
+                   <select class="form-select" id="borrower-name" [(ngModel)]="newLoanContract.borrowerId" name="borrowerId" aria-label="Default select example">
+                    <option selected="selected" disabled>Chọn tên người vay</option>
+                    <option *ngFor="let borrower of BorrowerInformationList" [value]="borrower.id">{{ borrower.fullName }}</option>
                   </select>
                 </div>
                 <div class="mb-3">
@@ -56,7 +54,7 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary" type="submit" (click)="handleSubmit()">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
           </form>
         </c-row>
       </c-card-body>
