@@ -7,7 +7,7 @@
       </c-card-header>
       <c-card-body>
         <c-row>
-          <form (ngSubmit)="addRelativeInformation()" (keypress)="handleEnter($event)">
+          <form (ngSubmit)="addRelativeInformation()">
             <div class="row">
               <div class="col-12 col-md-6">
                 <div class="mb-3">
@@ -64,50 +64,52 @@
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">Ảnh CCCD mặt trước</label>
-                  <input class="form-control" (change)="choiserImgFile($event, 'imageFront')" type="file" [(ngModel)]="newRelativeInformation.imageFront" [ngModelOptions]="{standalone: true}">
-                </div>
-                <div *ngIf="selectedImageMap['imageFront']">
-                  <div style="position: relative; display: inline-block;">
-                    <img [src]="selectedImageMap['imageFront']" alt="Selected Image" style="width: 50%;">
-                    <button (click)="clearSelectedImage('imageFront')"
-                      style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
-                      <span style="color: red; font-size: 20px;">×</span>
-                    </button>
+                  <label class="form-label">Ảnh CCCD mặt trước(*)</label>
+                  <input class="form-control" type="file" (change)="onFileSelected($event, 'ImageFront')"
+                    name="ImageFront" [(ngModel)]="newRelativeInformation.imageFront">
+                  <div *ngIf="selectedImageMap['ImageFront']">
+                    <div style="position: relative; display: inline-block;">
+                      <img [src]="selectedImageMap['ImageFront']" alt="Selected Image" style="width: 50%;">
+                      <button (click)="clearSelectedImage('ImageFront')"
+                        style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                        <span style="color: red; font-size: 20px;">×</span>
+                      </button>
+                    </div>
                   </div>
+
                 </div>
 
+                <div class="mb-3">
+                  <label class="form-label">Ảnh CCCD mặt sau(*)</label>
+                  <input class="form-control" type="file" (change)="onFileSelected($event, 'ImageBack')"
+                    [(ngModel)]="newRelativeInformation.imageBack" name="ImageBack">
+                  <div *ngIf="selectedImageMap['ImageBack']">
+                    <div style="position: relative; display: inline-block;">
+                      <img [src]="selectedImageMap['ImageBack']" alt="Selected Image" style="width: 50%;">
+                      <button (click)="clearSelectedImage('ImageBack')"
+                        style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                        <span style="color: red; font-size: 20px;">×</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
 
                 <div class="mb-3">
-                  <label class="form-label">Ảnh CCCD mặt sau</label>
-                  <input class="form-control" (change)="choiserImgFile($event, 'imageBack')" type="file" [(ngModel)]="newRelativeInformation.imageBack" [ngModelOptions]="{standalone: true}">
-                </div>
-                <div *ngIf="selectedImageMap['imageBack']">
-                  <div style="position: relative; display: inline-block;">
-                    <img [src]="selectedImageMap['imageBack']" alt="Selected Image" style="width: 50%;">
-                    <button (click)="clearSelectedImage('imageBack')"
-                      style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
-                      <span style="color: red; font-size: 20px;">×</span>
-                    </button>
+                  <label class="form-label">Ảnh chân dung(*)</label>
+                  <input class="form-control" type="file" (change)="onFileSelected($event, 'Portrait')" name="Portrait"
+                    [(ngModel)]="newRelativeInformation.portrait">
+                  <div *ngIf="selectedImageMap['Portrait']">
+                    <div style="position: relative; display: inline-block;">
+                      <img [src]="selectedImageMap['Portrait']" alt="Selected Image" style="width: 50%;">
+                      <button (click)="clearSelectedImage('Portrait')"
+                        style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
+                        <span style="color: red; font-size: 20px;">×</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-
-
-                <div class="mb-3">
-                  <label class="form-label">Ảnh chân dung</label>
-                  <input class="form-control" (change)="choiserImgFile($event, 'portrait')" type="file" [(ngModel)]="newRelativeInformation.portrait" [ngModelOptions]="{standalone: true}">
-                </div>
-                <div *ngIf="selectedImageMap['portrait']">
-                  <div style="position: relative; display: inline-block;">
-                    <img [src]="selectedImageMap['portrait']" alt="Selected Image" style="width: 50%;">
-                    <button (click)="clearSelectedImage('portrait')"
-                      style="position: absolute; top: 5px; right: 5px; background: transparent; border: none; cursor: pointer;">
-                      <span style="color: red; font-size: 20px;">×</span>
-                    </button>
-                  </div>
-                </div>
                 <div class="mb-3">
                   <label class="form-label" for="relative-note">Note</label>
                   <textarea class="form-control" id="relative-note" rows="5" placeholder="Note" [(ngModel)]="newRelativeInformation.note" name="note"></textarea>

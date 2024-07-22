@@ -1,5 +1,8 @@
-<app-tille *ngIf="content || title" [content]="content" [title]="title"></app-tille>
-
+<app-tille
+  *ngIf="content || title"
+  [content]="content"
+  [title]="title"
+></app-tille>
 <c-row>
   <c-col xs="12">
     <c-card class="mb-4">
@@ -8,59 +11,186 @@
       </c-card-header>
       <c-card-body>
         <c-row>
-          <form>
+          <form (ngSubmit)="addLoanContract()" [formGroup]="loanContractForm">
             <div class="row">
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-gender">Người vay</label>
-                  <select class="form-select" id="basic-form-gender" aria-label="Default select example">
-                    <option selected="selected">Chọn tên người vay</option>
-                    <option value="0">người 1</option>
-                    <option value="1">người 2</option>
+                  <label class="form-label" for="borrower-name"
+                    >Người vay</label
+                  >
+                  <select
+                    class="form-select"
+                    id="borrower-name"
+                    [(ngModel)]="newLoanContract.borrowerInformationId"
+                    name="borrowerInformationId"
+                    formControlName="borrowerInformationId"
+                    aria-label="Default select example"
+                  >
+                    <option selected disabled>Chọn tên người vay</option>
+                    <option
+                      *ngFor="let borrower of BorrowerInformationList"
+                      [value]="borrower.id"
+                    >
+                      {{ borrower.fullName }}
+                    </option>
                   </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="basic-form-gender">Thông tin khoản vay</label>
-                  <select class="form-select" id="basic-form-gender" aria-label="Default select example">
-                    <option selected="selected">Chọn thông tin khoản vay</option>
-                    <option value="0">Khoản vay 1</option>
-                    <option value="1">Khoản vay 2</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Ảnh giấy đề nghị vay vốn</label>
-                  <input class="form-control" type="file">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Ảnh giấy tờ chứng minh thu nhập</label>
-                  <input class="form-control" type="file">
                 </div>
 
+                <div class="mb-3">
+                  <label class="form-label" for="borrower-name"
+                    >Thông tin khoản vay(*)</label
+                  >
+                  <select
+                    class="form-select"
+                    [(ngModel)]="newLoanContract.loanInformationId"
+                    name="loanInformationId"
+                    formControlName="loanInformationId"
+                    aria-label="Default select example"
+                  >
+                    <option selected disabled>Chọn tên khoản vay</option>
+                    <option
+                      *ngFor="let loanInformation of LoanInformationList"
+                      [value]="loanInformation.id"
+                    >
+                      {{ loanInformation.loanInformationName }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Ảnh giấy đề nghị vay vốn(*)</label>
+                  <input
+                    class="form-control"
+                    type="file"
+                    (change)="onFileSelected($event, 'loanRequestFormImage')"
+                    name="loanRequestFormImage"
+                    formControlName="loanRequestFormImage"
+                    [(ngModel)]="newLoanContract.loanRequestFormImage"
+                  />
+                  <div *ngIf="selectedImageMap['loanRequestFormImage']">
+                    <div style="position: relative; display: inline-block">
+                      <img
+                        [src]="selectedImageMap['loanRequestFormImage']"
+                        alt="Selected Image"
+                        style="width: 50%"
+                      />
+                      <button
+                        (click)="clearSelectedImage('loanRequestFormImage')"
+                        style="
+                          position: absolute;
+                          top: 5px;
+                          right: 5px;
+                          background: transparent;
+                          border: none;
+                          cursor: pointer;
+                        "
+                      >
+                        <span style="color: red; font-size: 20px">×</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Ảnh giấy tờ chứng minh thu nhập(*)</label
+                  >
+                  <input
+                    class="form-control"
+                    type="file"
+                    formControlName="incomeProofImage"
+                    (change)="onFileSelected($event, 'incomeProofImage')"
+                    [(ngModel)]="newLoanContract.incomeProofImage"
+                    name="incomeProofImage"
+                  />
+                  <div *ngIf="selectedImageMap['incomeProofImage']">
+                    <div style="position: relative; display: inline-block">
+                      <img
+                        [src]="selectedImageMap['incomeProofImage']"
+                        alt="Selected Image"
+                        style="width: 50%"
+                      />
+                      <button
+                        (click)="clearSelectedImage('incomeProofImage')"
+                        style="
+                          position: absolute;
+                          top: 5px;
+                          right: 5px;
+                          background: transparent;
+                          border: none;
+                          cursor: pointer;
+                        "
+                      >
+                        <span style="color: red; font-size: 20px">×</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="col-12 col-md-6">
                 <div class="mb-3">
-                  <label class="form-label">Ảnh giấy tờ chứng minh mục đích vay vốn</label>
-                  <input class="form-control" type="file">
-                </div>
-                <div class="mb-3">
-                  <label class="form-label"> Ảnh tài sản đảm bảo</label>
-                  <input class="form-control" type="file">
+                  <label class="form-label">Ảnh tài sản đảm bảo(*)</label>
+                  <input
+                    class="form-control"
+                    type="file"
+                    formControlName="collateralImage"
+                    (change)="onFileSelected($event, 'collateralImage')"
+                    [(ngModel)]="newLoanContract.collateralImage"
+                    name="collateralImage"
+                  />
+                  <div *ngIf="selectedImageMap['collateralImage']">
+                    <div style="position: relative; display: inline-block">
+                      <img
+                        [src]="selectedImageMap['collateralImage']"
+                        alt="Selected Image"
+                        style="width: 50%"
+                      />
+                      <button
+                        (click)="clearSelectedImage('collateralImage')"
+                        style="
+                          position: absolute;
+                          top: 5px;
+                          right: 5px;
+                          background: transparent;
+                          border: none;
+                          cursor: pointer;
+                        "
+                      >
+                        <span style="color: red; font-size: 20px">×</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Nơi cất giấy hợp đồng</label>
-                  <input class="form-control" type="text" placeholder="Cất ở đâu?">
+                  <input
+                    [(ngModel)]="newLoanContract.compartmentId"
+                    name="compartmentId"
+                    formControlName="compartmentId"
+                    class="form-control"
+                    type="text"
+                    placeholder="Cất ở đâu?"
+                  />
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-textarea">Note</label>
-                  <textarea class="form-control" id="basic-form-textarea" rows="2" placeholder="Note"></textarea>
+                  <label class="form-label" for="basic-form-textarea"
+                    >Note</label
+                  >
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="newLoanContract.note"
+                    formControlName="note"
+                    name="note"
+                    id="basic-form-textarea"
+                    rows="2"
+                    placeholder="Note"
+                  ></textarea>
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary" type="submit" (click)="handleSubmit()">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
           </form>
         </c-row>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
