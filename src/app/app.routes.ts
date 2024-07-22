@@ -32,7 +32,10 @@ export const routes: Routes = [
         path: 'forms',
         loadChildren: () => import('./views/forms/routes').then((m) => m.routes)
       },
-
+      {
+        path: '',
+        loadChildren: () => import('./views/detail/routes').then((m) => m.routes)
+      },
     ]
   },
   {
