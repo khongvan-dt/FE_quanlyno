@@ -1,6 +1,6 @@
 <div class="text-center">
-  <h2 *ngIf= "content">{{content}}</h2>
-  <p *ngIf= "title" class="lead">{{title}}</p>
+  <h2 *ngIf="content">{{ content }}</h2>
+  <p *ngIf="title" class="lead">{{ title }}</p>
 </div>
 <c-row ngPreserveWhitespaces>
   <c-col xs="12">
@@ -58,7 +58,6 @@
                 <th>Giới tính</th>
                 <th>Hết nợ</th>
                 <th>Note</th>
-
                 <th>Chức năng</th>
               </tr>
             </thead>
@@ -66,8 +65,8 @@
               <tr
                 *ngFor="let itemAllLoan of allLoanList; let i = index"
                 [ngClass]="{
-                  'table-success': itemAllLoan.loanDone === 1,
-                  'table-danger': itemAllLoan.loanDone !== 1
+                  'table-success': itemAllLoan.loanDone === 0,
+                  'table-danger': itemAllLoan.loanDone !== 0
                 }"
               >
                 <td>{{ i + 1 }}</td>
@@ -77,23 +76,42 @@
                 <td>{{ itemAllLoan.identityCardNumber }}</td>
                 <td>{{ itemAllLoan.hometown }}</td>
                 <td>{{ itemAllLoan.address }}</td>
-                <td>{{ itemAllLoan.gender }}</td>
+                <td>{{ itemAllLoan.gender === 0 ? "Nam" : "Nữ" }}</td>
+                <td>{{ itemAllLoan.loanDone === 0 ? "Done" : "No" }}</td>
                 <td>{{ itemAllLoan.note || "N/A" }}</td>
-                <td>{{ itemAllLoan.loanDone === 1 ? "Done" : "No" }}</td>
-
                 <td>
-                  <div class="d-flex flex-column mt-4" style="display: flex">
-                    <a class="btn btn-primary btn-sm"
-                      ><svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 576 512"
+                  <div class="d-flex flex-column mt-4">
+                    <div class="mb-2">
+                      <a class="btn btn-primary btn-sm" href="#">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 576 512"
+                        >
+                          <path
+                            d="M288 144a110.9 110.9 0 0 0 -31.2 5 55.4 55.4 0 0 1 7.2 27 56 56 0 0 1 -56 56 55.4 55.4 0 0 1 -27-7.2A111.7 111.7 0 1 0 288 144zm284.5 97.4C518.3 135.6 410.9 64 288 64S57.7 135.6 3.5 241.4a32.4 32.4 0 0 0 0 29.2C57.7 376.4 165.1 448 288 448s230.3-71.6 284.5-177.4a32.4 32.4 0 0 0 0-29.2zM288 400c-98.7 0-189.1-55-237.9-144C98.9 167 189.3 112 288 112s189.1 55 237.9 144C477.1 345 386.7 400 288 400z"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                    <div>
+                      <a
+                        class="btn btn-primary btn-sm"
+                        (click)="delete(itemAllLoan.id)"
                       >
-                        <path
-                          d="M288 144a110.9 110.9 0 0 0 -31.2 5 55.4 55.4 0 0 1 7.2 27 56 56 0 0 1 -56 56 55.4 55.4 0 0 1 -27-7.2A111.7 111.7 0 1 0 288 144zm284.5 97.4C518.3 135.6 410.9 64 288 64S57.7 135.6 3.5 241.4a32.4 32.4 0 0 0 0 29.2C57.7 376.4 165.1 448 288 448s230.3-71.6 284.5-177.4a32.4 32.4 0 0 0 0-29.2zM288 400c-98.7 0-189.1-55-237.9-144C98.9 167 189.3 112 288 112s189.1 55 237.9 144C477.1 345 386.7 400 288 400z"
-                        /></svg
-                    ></a>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 448 512"
+                        >
+                          <path
+                            d="M32 64C32 28.7 60.7 0 96 0H352c35.3 0 64 28.7 64 64v16h64c17.7 0 32 14.3 32 32v16c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V112H0V96c0-17.7 14.3-32 32-32h64V64zM96 128h256v-16H96v16zm32 384c0 8.5-6.9 15.5-15.5 15.5s-15.5-6.9-15.5-15.5V192c0-8.5 6.9-15.5 15.5-15.5s15.5 6.9 15.5 15.5v320zm64 0c0 8.5-6.9 15.5-15.5 15.5s-15.5-6.9-15.5-15.5V192c0-8.5 6.9-15.5 15.5-15.5s15.5 6.9 15.5 15.5v320zm64 0c0 8.5-6.9 15.5-15.5 15.5s-15.5-6.9-15.5-15.5V192c0-8.5 6.9-15.5 15.5-15.5s15.5 6.9 15.5 15.5v320zm64 0c0 8.5-6.9 15.5-15.5 15.5s-15.5-6.9-15.5-15.5V192c0-8.5 6.9-15.5 15.5-15.5s15.5 6.9 15.5 15.5v320z"
+                          />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 </td>
               </tr>
