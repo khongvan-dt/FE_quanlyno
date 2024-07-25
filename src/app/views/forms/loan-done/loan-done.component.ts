@@ -98,10 +98,19 @@ export class LoanDoneComponent {
     );
   }
 
-  onLoanInfoChange(event: any): void {
-    const loanId = event.target.value;
-    const selectedLoan = this.LoanInformationList.find(loan => loan.id === loanId);
+  onLoanInfoChange(event: Event): void {
+    const selectHtml = event.target as HTMLSelectElement;
+    const selectedLoanId = Number(selectHtml.value);
+
+    const selectedLoan = this.LoanInformationList.find(
+      (loan) => loan.id === selectedLoanId
+    );
+
+    console.log(selectedLoan);
+
     if (selectedLoan && selectedLoan.isInstallment === 1) {
+      this.selectedLoanAmount = selectedLoan.loanAmount;
+    } else if (selectedLoan && selectedLoan.isInstallment === 0) {
       this.selectedLoanAmount = selectedLoan.loanAmount;
     } else {
       this.selectedLoanAmount = null;

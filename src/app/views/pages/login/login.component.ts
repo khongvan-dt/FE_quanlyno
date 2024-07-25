@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule, NgStyle } from '@angular/common';
 import { IconDirective } from '@coreui/icons-angular';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-
 import {
   ContainerComponent,
   RowComponent,
@@ -60,8 +63,16 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(): void {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
     this.http
-      .post<any>('http://localhost:5219/api/Authenticate/login', this.userLogin)
+      .post<any>(
+        'http://localhost:5219/api/Authenticate/login',
+        this.userLogin,
+        { headers }
+      )
       .subscribe(
         (response) => {
           if (response && response.token) {
@@ -73,9 +84,15 @@ export class LoginComponent {
         },
         (error) => {
           console.error('Error during login:', error);
-          this.errorMessage = 'An error occurred while trying to log in';
+          if (error.status === 401) {
+            this.errorMessage =
+              'Authentication error: Invalid username or password.';
+          } else if (error.status === 403) {
+            this.errorMessage = 'Permission error: You do not have access.';
+          } else {
+            this.errorMessage = 'An error occurred while trying to log in';
+          }
         }
       );
   }
-
 }
