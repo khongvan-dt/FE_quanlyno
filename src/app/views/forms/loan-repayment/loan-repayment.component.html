@@ -14,17 +14,14 @@
         <c-row>
           <form (ngSubmit)="addLoanRepayment()">
             <div class="mb-3">
-              <label class="form-label" for="basic-form-gender"
-                >Người vay</label
-              >
+              <label class="form-label" for="borrower-select">Người vay</label>
               <select
                 class="form-select"
-                id="basic-form-gender"
-                aria-label="Default select example"
-                name="borrowerInformationId"
-                [(ngModel)]="newLoanRepayment.borrowerInformationId"
+                id="borrower-select"
+                (change)="onBorrowerChange($event)"
+                [(ngModel)]="newLoanRepayment.borrowerInformationId" name="borrowerInformationId"
               >
-                <option selected="selected">Chọn tên người vay</option>
+                <option value="" selected="selected">Chọn tên người vay</option>
                 <option
                   *ngFor="let borrower of borrowerInformationList"
                   [value]="borrower.id"
@@ -34,19 +31,17 @@
               </select>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="basic-form-gender"
+              <label class="form-label" for="loan-info-select"
                 >Thông tin khoản vay</label
               >
-              <select
-                class="form-select"
-                id="basic-form-gender"
-                aria-label="Default select example"
-                [(ngModel)]="newLoanRepayment.loanInformationId"
-                name="loanInformationId"
-              >
-                <option selected="selected">Chọn thông tin khoản vay</option>
+              <select class="form-select" id="loan-info-select"
+
+              [(ngModel)]="newLoanRepayment.loanInformationId" name="loanInformationId">
+                <option value="" selected="selected">
+                  Chọn thông tin khoản vay
+                </option>
                 <option
-                  *ngFor="let loanInformation of LoanInformationList"
+                  *ngFor="let loanInformation of filteredLoanInformationList"
                   [value]="loanInformation.id"
                 >
                   {{ loanInformation.loanInformationName }}

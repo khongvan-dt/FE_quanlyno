@@ -1,3 +1,10 @@
 :host .legend small {
   font-size: x-small;
-}/*# sourceMappingURL=dashboard.component.css.map */
+}
+.example-card {
+  max-width: 400px;
+}
+
+.example-card-footer {
+  padding: 16px;
+}

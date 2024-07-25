@@ -19,6 +19,10 @@ import { BorrowerInformation } from 'src/app/shared/model/BorrowerInformation';
 import { LoanInformation } from 'src/app/shared/model/LoanInformation';
 import { LoanRepayment } from 'src/app/shared/model/LoanRepayment';
 import { CommonModule } from '@angular/common';
+import { LoanDoneService } from 'src/app/shared/service/loanDone.service';
+import { LoanDone } from 'src/app/shared/model/LoanDone';
+import { Toast } from 'src/app/shared/service/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loan-done',
@@ -43,6 +47,7 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class LoanDoneComponent {
+  [x: string]: any;
   BorrowerInformationList: BorrowerInformation[] = [];
   LoanInformationList: LoanInformation[] = [];
   filteredLoanInformationList: LoanInformation[] = [];
@@ -50,10 +55,14 @@ export class LoanDoneComponent {
   selectedLoanInformation?: LoanInformation;
   loanAmount: number | null = null;
   selectedLoanAmount: number | null = null;
+  newLoanDone: LoanDone = new LoanDone();
+
 
   constructor(
     private borrowerService: BorrowerService,
-    public loanInformationService: LoanInformationService
+    public loanInformationService: LoanInformationService,
+    private loanDoneService: LoanDoneService,
+    private router :Router
   ) {
     this.getBorrowerInformation();
     this.getLoanInformation();
@@ -115,5 +124,13 @@ export class LoanDoneComponent {
     } else {
       this.selectedLoanAmount = null;
     }
+  }
+  addLoanDone(): void {
+    this.loanDoneService.addLoanDone(this.newLoanDone)
+    .then((response)=>{
+      new Toast('success');
+      this.newLoanDone = new LoanDone();
+      this.router.navigate(['/home']);
+    })
   }
 }

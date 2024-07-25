@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 import { AllLoanService } from '../../../shared/service/allLoan.service';
 import { AllLoan } from 'src/app/shared/model/AllLoan';
 import { BorrowerService } from '../../../shared/service/borrower.service';
-import { Toast } from '../../../shared/service/toast'; // Ensure this path is correct
+import { Toast } from '../../../shared/service/toast'; 
 import { Router } from '@angular/router';
 import { BorrowerInformation } from 'src/app/shared/model/BorrowerInformation';
 

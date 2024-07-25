@@ -55,6 +55,7 @@ export class LoanRepaymentComponent {
   newLoanRepayment: LoanRepayment = new LoanRepayment();
   borrowerInformationList: BorrowerInformation[] = [];
   LoanInformationList: LoanInformation[] = [];
+  filteredLoanInformationList: LoanInformation[] = [];
 
   content = 'Thêm khoản trả góp';
   title =
@@ -82,8 +83,6 @@ export class LoanRepaymentComponent {
   }
 
   getBorrowerInformation(): void {
-    console.log(this.newLoanRepayment);
-
     this.borrowerService
       .getBorrowerInformation()
       .then((listBorrower) => {
@@ -95,7 +94,7 @@ export class LoanRepaymentComponent {
   }
 
   addLoanRepayment(): void {
-
+    console.log( this.newLoanRepayment)
     this.loanRepaymentService
       .addLoanRepayment(this.newLoanRepayment)
       .then((response) => {
@@ -107,5 +106,12 @@ export class LoanRepaymentComponent {
         new Toast('error');
         console.error('Error adding loan repayment:', error);
       });
+  }
+  onBorrowerChange(event: Event): void {
+    const selectHtml = event.target as HTMLSelectElement;
+    const borrowerId = Number(selectHtml.value);
+    this.filteredLoanInformationList = this.LoanInformationList.filter(
+      (loan) => loan.borrowerId === borrowerId
+    );
   }
 }

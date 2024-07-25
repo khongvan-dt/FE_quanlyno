@@ -1,8 +1,27 @@
+import { LoanDone } from './../../shared/model/LoanDone';
 import { DOCUMENT, NgStyle } from '@angular/common';
-import { Component, DestroyRef, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  WritableSignal,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChartOptions } from 'chart.js';
+
+import { RouterLink } from '@angular/router';
+
 import {
+  NavComponent,
+  NavItemComponent,
+  NavLinkDirective,
+  TabContentRefDirective,
+  TabContentComponent,
+  RoundedDirective,
+  TabPaneComponent,
   AvatarComponent,
   ButtonDirective,
   ButtonGroupComponent,
@@ -17,172 +36,198 @@ import {
   ProgressComponent,
   RowComponent,
   TableDirective,
-  TextColorDirective
+  TextColorDirective,
 } from '@coreui/angular';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { IconDirective } from '@coreui/icons-angular';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AllLoanService } from '../../shared/service/allLoan.service';
+import { LoanDoneService } from '../../shared/service/loanDone.service';
 
-import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
+import { AllLoan } from 'src/app/shared/model/AllLoan';
+import { LoanInformation } from 'src/app/shared/model/LoanInformation';
 
-interface IUser {
-  name: string;
-  state: string;
-  registered: string;
-  country: string;
-  usage: number;
-  period: string;
-  payment: string;
-  activity: string;
-  avatar: string;
-  status: string;
-  color: string;
-}
+import { BorrowerService } from '../../shared/service/borrower.service';
+import { LoanInformationService } from '../../shared/service/loanInformation.service';
+
+import { Toast } from '../../shared/service/toast';
+import { Router } from '@angular/router';
+import { BorrowerInformation } from 'src/app/shared/model/BorrowerInformation';
+import {
+  WidgetStatAComponent,
+  TemplateIdDirective,
+  ThemeDirective,
+  DropdownComponent,
+  DropdownToggleDirective,
+  DropdownMenuDirective,
+  DropdownItemDirective,
+  DropdownDividerDirective,
+} from '@coreui/angular';
 
 @Component({
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss'],
   standalone: true,
-  imports: [ TextColorDirective, CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, ProgressBarDirective, ProgressComponent,CardHeaderComponent, TableDirective, AvatarComponent]
+  imports: [
+    TextColorDirective,
+    CardComponent,
+    CardBodyComponent,
+    RowComponent,
+    ColComponent,
+    ButtonDirective,
+    IconDirective,
+    ReactiveFormsModule,
+    ButtonGroupComponent,
+    FormCheckLabelDirective,
+    NgStyle,
+    CardFooterComponent,
+    GutterDirective,
+    ProgressBarDirective,
+    ProgressComponent,
+    CardHeaderComponent,
+    TableDirective,
+    AvatarComponent,
+    RowComponent,
+    ColComponent,
+    TextColorDirective,
+    CardComponent,
+    CardHeaderComponent,
+    CardBodyComponent,
+    NavComponent,
+    NavItemComponent,
+    NavLinkDirective,
+    TabContentRefDirective,
+    RouterLink,
+    IconDirective,
+    TabContentComponent,
+    RoundedDirective,
+    TabPaneComponent,
+    FormsModule,
+    CommonModule,
+    RowComponent,
+    ColComponent,
+    WidgetStatAComponent,
+    TemplateIdDirective,
+    IconDirective,
+    ThemeDirective,
+    DropdownComponent,
+    ButtonDirective,
+    DropdownToggleDirective,
+    DropdownMenuDirective,
+    DropdownItemDirective,
+    RouterLink,
+    DropdownDividerDirective,
+  ],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
+  allLoanList: AllLoan[] = [];
+  loanInformationList: LoanInformation[] = [];
+  loanDoneList: LoanDone[] = [];
 
-  readonly #destroyRef: DestroyRef = inject(DestroyRef);
-  readonly #document: Document = inject(DOCUMENT);
-  readonly #renderer: Renderer2 = inject(Renderer2);
-  readonly #chartsData: DashboardChartsData = inject(DashboardChartsData);
+  content = 'Thông tin tất cả các khoản vay(Information on all loans)';
+  title = 'Bạn có thể xem được thông tin tất cả các khoản vay ở đây.';
+  borrower: BorrowerInformation | null = null;
+  totalRecords: number = 0;
+  totalRecords2: number = 0;
+  totalRecords3: number = 0;
 
-  public users: IUser[] = [
-    {
-      name: 'Yiorgos Avraamu',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Us',
-      usage: 50,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Mastercard',
-      activity: '10 sec ago',
-      avatar: './assets/images/avatars/1.jpg',
-      status: 'success',
-      color: 'success'
-    },
-    {
-      name: 'Avram Tarasios',
-      state: 'Recurring ',
-      registered: 'Jan 1, 2021',
-      country: 'Br',
-      usage: 10,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Visa',
-      activity: '5 minutes ago',
-      avatar: './assets/images/avatars/2.jpg',
-      status: 'danger',
-      color: 'info'
-    },
-    {
-      name: 'Quintin Ed',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'In',
-      usage: 74,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Stripe',
-      activity: '1 hour ago',
-      avatar: './assets/images/avatars/3.jpg',
-      status: 'warning',
-      color: 'warning'
-    },
-    {
-      name: 'Enéas Kwadwo',
-      state: 'Sleep',
-      registered: 'Jan 1, 2021',
-      country: 'Fr',
-      usage: 98,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Paypal',
-      activity: 'Last month',
-      avatar: './assets/images/avatars/4.jpg',
-      status: 'secondary',
-      color: 'danger'
-    },
-    {
-      name: 'Agapetus Tadeáš',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Es',
-      usage: 22,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'ApplePay',
-      activity: 'Last week',
-      avatar: './assets/images/avatars/5.jpg',
-      status: 'success',
-      color: 'primary'
-    },
-    {
-      name: 'Friderik Dávid',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Pl',
-      usage: 43,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Amex',
-      activity: 'Yesterday',
-      avatar: './assets/images/avatars/6.jpg',
-      status: 'info',
-      color: 'dark'
-    }
-  ];
-
-  public mainChart: IChartProps = { type: 'line' };
-  public mainChartRef: WritableSignal<any> = signal(undefined);
-  #mainChartRefEffect = effect(() => {
-    if (this.mainChartRef()) {
-      this.setChartStyles();
-    }
-  });
-  public chart: Array<IChartProps> = [];
-  public trafficRadioGroup = new FormGroup({
-    trafficRadio: new FormControl('Month')
-  });
-
-  ngOnInit(): void {
-    this.initCharts();
-    this.updateChartOnColorModeChange();
+  constructor(
+    private allLoanService: AllLoanService,
+    private borrowerService: BorrowerService,
+    private router: Router,
+    private loanInformationService: LoanInformationService,
+    private loanDoneService: LoanDoneService
+  ) {
+    this.getAllLoans();
+    this.getLoanInformation();
+    this.getLoanDone();
+    this.getLoanInformationAndFilter();
   }
 
-  initCharts(): void {
-    this.mainChart = this.#chartsData.mainChart;
-  }
-
-  setTrafficPeriod(value: string): void {
-    this.trafficRadioGroup.setValue({ trafficRadio: value });
-    this.#chartsData.initMainChart(value);
-    this.initCharts();
-  }
-
-  handleChartRef($chartRef: any) {
-    if ($chartRef) {
-      this.mainChartRef.set($chartRef);
-    }
-  }
-
-  updateChartOnColorModeChange() {
-    const unListen = this.#renderer.listen(this.#document.documentElement, 'ColorSchemeChange', () => {
-      this.setChartStyles();
-    });
-
-    this.#destroyRef.onDestroy(() => {
-      unListen();
-    });
-  }
-
-  setChartStyles() {
-    if (this.mainChartRef()) {
-      setTimeout(() => {
-        const options: ChartOptions = { ...this.mainChart.options };
-        const scales = this.#chartsData.getScales();
-        this.mainChartRef().options.scales = { ...options.scales, ...scales };
-        this.mainChartRef().update();
+  getAllLoans(): void {
+    this.allLoanService
+      .getAllLoan()
+      .then((allLoans) => {
+        this.allLoanList = allLoans;
+        this.totalRecords = allLoans.length;
+      })
+      .catch((error) => {
+        console.error('Error fetching AllLoan list:', error);
       });
+  }
+  getLoanInformation(): void {
+    this.loanInformationService
+      .getLoanInformation()
+      .then((allLoanInformation) => {
+        this.loanInformationList = allLoanInformation;
+        this.totalRecords2 = allLoanInformation.length;
+      })
+      .catch((error) => {
+        console.error('Error fetching all LoanInformation list:', error);
+      });
+  }
+
+  getLoanDone(): void {
+    this.loanDoneService
+      .getLoanDone()
+      .then((allLoandone) => {
+        this.loanDoneList = allLoandone;
+        this.totalRecords3 = allLoandone.length;
+      })
+      .catch((error) => {
+        console.error('Error fetching all LoanInformation list:', error);
+      });
+  }
+
+  getLoanInformationAndFilter(): void {
+    Promise.all([
+      this.loanInformationService.getLoanInformation(),
+      this.loanDoneService.getLoanDone(),
+    ])
+      .then(([allLoanInformation, allLoandone]) => {
+        this.loanInformationList = allLoanInformation;
+        this.loanDoneList = allLoandone;
+
+        const loanDoneIds = new Set(
+          this.loanDoneList.map((loanDone) => loanDone.LoanInformationId)
+        );
+        const filteredLoanInformation = this.loanInformationList.filter(
+          (loanInfo) => !loanDoneIds.has(loanInfo.id)
+        );
+
+        this.totalRecords2 = filteredLoanInformation.length;
+        this.totalRecords3 = this.loanDoneList.length;
+
+        console.log('Filtered LoanInformation:', filteredLoanInformation);
+      })
+      .catch((error) => {
+        console.error(
+          'Error fetching LoanInformation or LoanDone list:',
+          error
+        );
+      });
+  }
+
+  async delete(id: number): Promise<void> {
+    try {
+      const confirmed = await Toast.confirmDelete();
+      if (confirmed) {
+        await this.borrowerService.deleteBorrower(id);
+        const toast = new Toast('success');
+        toast.successDeleted(true);
+        this.getAllLoans();
+      } else {
+        new Toast('info');
+      }
+    } catch (error) {
+      console.error(`Error deleting Loan with id ${id}:`, error);
+      const toast = new Toast('error');
+      toast.successDeleted(false);
     }
+  }
+
+  navigateToDetail(id: number) {
+    this.router.navigate(['/detail/detailinportmationloan']);
   }
 }

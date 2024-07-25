@@ -1,150 +1,166 @@
-<c-card class="my-4">
-  <c-card-body>
-    <c-row>
-      <c-col sm="5">
-        <h4 class="card-title mb-0" id="traffic">Traffic</h4>
-        <div class="small text-body-secondary">January - December 2023</div>
-      </c-col>
-      <c-col class="d-none d-md-block" sm="7">
-        <button cButton class="float-end" color="primary">
-          <svg cIcon name="cilCloudDownload"></svg>
-        </button>
-        <form [formGroup]="trafficRadioGroup">
-          <c-button-group class="float-end me-3" role="group">
-            <input
-              class="btn-check"
-              formControlName="trafficRadio"
-              type="radio"
-              value="Day"
-            />
-            <label
-              (click)="setTrafficPeriod('Day')"
-              cButton
-              cFormCheckLabel
-              color="secondary"
-              variant="outline"
-            >
-              Day
-            </label>
-            <input
-              class="btn-check"
-              formControlName="trafficRadio"
-              type="radio"
-              value="Month"
-            />
-            <label
-              (click)="setTrafficPeriod('Month')"
-              cButton
-              cFormCheckLabel
-              color="secondary"
-              variant="outline"
-            >
-              Month
-            </label>
-            <input
-              class="btn-check"
-              formControlName="trafficRadio"
-              type="radio"
-              value="Year"
-            />
-            <label
-              (click)="setTrafficPeriod('Year')"
-              cButton
-              cFormCheckLabel
-              color="secondary"
-              variant="outline"
-            >
-              Year
-            </label>
-          </c-button-group>
-        </form>
-      </c-col>
-    </c-row>
-    <c-chart
-      [data]="mainChart.data"
-      [height]="300"
-      [ngStyle]="{ 'marginTop.px': 40 }"
-      [options]="mainChart.options"
-      [type]="mainChart.type"
-      (chartRef)="handleChartRef($event)"
-    >
-      Main chart
-    </c-chart>
-  </c-card-body>
-  
-</c-card>
+<c-card-body class="p-2 pb-4">
+  <c-row>
+    <c-col sm="3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Số người vay: {{ totalRecords }}</h5>
+          <p class="card-text">Số người hiện đang vay</p>
+        </div>
+      </div>
+    </c-col>
+
+    <c-col sm="3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Số khoản vay: {{ totalRecords2 }}</h5>
+          <p class="card-text">Số khoản vay hiện đang có</p>
+        </div>
+      </div>
+    </c-col>
+    <c-col sm="3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Đã trả hết: {{ totalRecords3 }}</h5>
+          <p class="card-text">Các khoản vay đã thanh toán</p>
+        </div>
+      </div>
+    </c-col>
+    <c-col sm="3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            Còn nợ 
+          </h5>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+        </div>
+      </div>
+    </c-col>
+  </c-row>
+</c-card-body>
 
 <c-row>
   <c-col xs>
     <c-card class="mb-4">
+      <c-card-header>
+        <div style="display: flex">
+          <div>
+            <strong>Thông tin tất cả các khoản vay</strong>
+          </div>
+          <div style="margin-left: auto">
+            <a cdropdownitem="" href="/#/forms/borrower-information">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 512"
+                width="30"
+                height="30"
+              >
+                <path
+                  fill="#808080"
+                  d="M624 208h-64v-64c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v64h-64c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h64v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h64c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm-400 48c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </c-card-header>
       <c-card-body>
-        <table
-          [hover]="true"
-          [responsive]="true"
-          [striped]="true"
-          align="middle"
-          cTable
-          class="mb-0 border"
-        >
-          <thead class="text-nowrap text-truncate">
-          <tr>
-            <th class="bg-body-tertiary text-center ">
-              <svg cIcon name="cilPeople"></svg>
-            </th>
-            <th class="bg-body-tertiary">User</th>
-            <th class="bg-body-tertiary text-center">Country</th>
-            <th class="bg-body-tertiary">Usage</th>
-            <th class="bg-body-tertiary text-center">Payment Method</th>
-            <th class="bg-body-tertiary">Activity</th>
-          </tr>
-          </thead>
-          <tbody>
-            @for (user of users; track user.name; let i = $index) {
+        <div style="overflow-x: auto">
+          <table
+            class="table table-bordered table-contextual"
+            style="width: auto; table-layout: fixed"
+          >
+            <colgroup>
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+              <col style="width: 200px" />
+            </colgroup>
+            <thead>
               <tr>
-                <td class="text-center">
-                  <c-avatar [size]="'md'" src="{{ user.avatar }}" status="{{ user.status }}" />
-                </td>
+                <th>#</th>
+                <th>Họ và tên</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Số căn cước công dân</th>
+                <th>Quên quán</th>
+                <th>Địa chỉ thường trú</th>
+                <th>Giới tính</th>
+                <th>Hết nợ</th>
+                <th>Note</th>
+                <th>Chức năng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let itemAllLoan of allLoanList; let i = index"
+                [ngClass]="{
+                  'table-success': itemAllLoan.loanDone === 0,
+                  'table-danger': itemAllLoan.loanDone !== 0
+                }"
+              >
+                <td>{{ i + 1 }}</td>
+                <td>{{ itemAllLoan.fullName }}</td>
+                <td>{{ itemAllLoan.phoneNumber }}</td>
+                <td>{{ itemAllLoan.email || "N/A" }}</td>
+                <td>{{ itemAllLoan.identityCardNumber }}</td>
+                <td>{{ itemAllLoan.hometown }}</td>
+                <td>{{ itemAllLoan.address }}</td>
+                <td>{{ itemAllLoan.gender === 0 ? "Nam" : "Nữ" }}</td>
+                <td>{{ itemAllLoan.loanDone === 0 ? "Done" : "No" }}</td>
+                <td>{{ itemAllLoan.note || "N/A" }}</td>
                 <td>
-                  <div>{{ user.name }}</div>
-                  <div class="small text-body-secondary text-nowrap">
-                  <span>
-                    {{ user.state }} | Registered: {{ user.registered }}
-                  </span>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <svg
-                    cIcon
-                    id="{{ user.country + user.name }}"
-                    name="cif{{ user.country }}"
-                    size="xl"
-                    title="{{ user.country }}"
-                  ></svg>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-between">
-                    <div class="float-start">
-                      <strong>{{ user.usage }}%</strong>
+                  <div class="d-flex flex-column mt-4">
+                    <div class="mb-2">
+                      <a
+                        class="btn btn-primary btn-sm"
+                        (click)="navigateToDetail(itemAllLoan.id)"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 576 512"
+                        >
+                          <path
+                            d="M288 144a110.9 110.9 0 0 0 -31.2 5 55.4 55.4 0 0 1 7.2 27 56 56 0 0 1 -56 56 55.4 55.4 0 0 1 -27-7.2A111.7 111.7 0 1 0 288 144zm284.5 97.4C518.3 135.6 410.9 64 288 64S57.7 135.6 3.5 241.4a32.4 32.4 0 0 0 0 29.2C57.7 376.4 165.1 448 288 448s230.3-71.6 284.5-177.4a32.4 32.4 0 0 0 0-29.2zM288 400c-98.7 0-189.1-55-237.9-144C98.9 167 189.3 112 288 112s189.1 55 237.9 144C477.1 345 386.7 400 288 400z"
+                          />
+                        </svg>
+                      </a>
                     </div>
-                    <div class="float-end ms-1 text-nowrap">
-                      <small class="text-body-secondary">
-                        {{ user.period }}
-                      </small>
+
+                    <div>
+                      <a
+                        class="btn btn-primary btn-sm"
+                        (click)="delete(itemAllLoan.id)"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 448 512"
+                        >
+                          <path
+                            d="M32 64C32 28.7 60.7 0 96 0H352c35.3 0 64 28.7 64 64v16h64c17.7 0 32 14.3 32 32v16c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V112H0V96c0-17.7 14.3-32 32-32h64V64zM96 128h256v-16H96v16zm32 384c0 8.5-6.9 15.5-15.5 15.5s-15.5-6.9-15.5-15.5V192c0-8.5 6.9-15.5 15.5-15.5s15.5 6.9 15.5 15.5v320zm64 0c0 8.5-6.9 15.5-15.5 15.5s-15.5-6.9-15.5-15.5V192c0-8.5 6.9-15.5 15.5-15.5s15.5 6.9 15.5 15.5v320zm64 0c0 8.5-6.9 15.5-15.5 15.5s-15.5-6.9-15.5-15.5V192c0-8.5 6.9-15.5 15.5-15.5s15.5 6.9 15.5 15.5v320zm64 0c0 8.5-6.9 15.5-15.5 15.5s-15.5-6.9-15.5-15.5V192c0-8.5 6.9-15.5 15.5-15.5s15.5 6.9 15.5 15.5v320z"
+                          />
+                        </svg>
+                      </a>
                     </div>
                   </div>
-                  <c-progress thin [value]="user.usage" color="{{ user.color }}" />
-                </td>
-                <td class="text-center">
-                  <svg cIcon name="cibCc{{ user.payment }}" size="xl"></svg>
-                </td>
-                <td>
-                  <div class="small text-body-secondary">Last login</div>
-                  <div class="fw-semibold text-nowrap">{{ user.activity }}</div>
                 </td>
               </tr>
-            }
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </c-card-body>
     </c-card>
   </c-col>
