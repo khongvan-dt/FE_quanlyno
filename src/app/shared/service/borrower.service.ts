@@ -38,4 +38,26 @@ export class BorrowerService {
       return Promise.reject('Token not found');
     }
   }
+  deleteBorrower(id: number): Promise<void> {
+    const token = getToken();
+    if (token) {
+      const headers = {
+        Authorization: 'Bearer ' + token,
+      };
+
+      return axios
+        .delete<void>(`http://localhost:5219/api/BorrowerInformation/${id}`, {
+          headers,
+        })
+        .then(() => {
+          console.log('Borrower deleted successfully');
+        })
+        .catch((error) => {
+          console.error('Error deleting Borrower:', error);
+          throw error;
+        });
+    } else {
+      return Promise.reject('Token not found');
+    }
+  }
 }

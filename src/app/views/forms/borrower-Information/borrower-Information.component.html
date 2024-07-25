@@ -1,4 +1,7 @@
 <app-tille *ngIf="content || title" [content]="content" [title]="title"></app-tille>
+
+
+
 <c-row>
   <c-col xs="12">
     <!-- <c-card class="mb-4">
@@ -24,10 +27,10 @@
                 </div>
               </div>
             </div>
-          
+
             <button class="btn btn-primary" type="submit">Submit</button>
           </form>
-          
+
         </c-row>
 
       </c-card-body>
@@ -56,11 +59,9 @@
                   <select class="form-select form-select-sm" aria-label=".form-select-sm example"
                     [(ngModel)]="newBorrowerInformation.LoanDone" name="LoanDone">
                     <option [value]="1">Còn nợ</option>
-                    <option [value]="2">Done</option>
+                    <option [value]="0">Done</option>
                   </select>
                 </div>
-
-
                 <div class="mb-3">
                   <label class="form-label" for="basic-form-email">Số điện thoại(*)</label>
                   <input class="form-control" id="basic-form-email" type="text" placeholder="Số điện thoại chính chủ"
@@ -111,7 +112,7 @@
                     [(ngModel)]="newBorrowerInformation.Address" name="address" placeholder="Địa chỉ thường trú">
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="basic-form-gender">Giói tính(*)</label>
+                  <label class="form-label" for="basic-form-gender">Giới tính(*)</label>
                   <select class="form-select" id="basic-form-gender" aria-label="Default select example"
                     [(ngModel)]="newBorrowerInformation.Gender" name="gender">
                     <option selected="selected">Chọn giới tính(theo CCCD)</option>
@@ -119,7 +120,7 @@
                     <option value="1">Nữ</option>
                   </select>
                 </div>
-                
+
                 <div class="mb-3">
                   <label class="form-label">Ảnh CCCD mặt trước(*)</label>
                   <input class="form-control" type="file" (change)="onFileSelected($event, 'ImageFront')"

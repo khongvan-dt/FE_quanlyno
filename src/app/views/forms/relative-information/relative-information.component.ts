@@ -91,6 +91,7 @@ export class RelativeInformationComponent {
         console.error('Error fetching Brorrower list:', error);
       })
   }
+  
   addRelativeInformation(): void {
     this.relativeInformationservice.addRelativeInformation(this.newRelativeInformation)
       .then((response) => {

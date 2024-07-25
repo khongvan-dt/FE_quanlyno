@@ -12,8 +12,8 @@
               <div class="col-12 col-md-6">
                 <div class="mb-3">
                   <label class="form-label" for="borrower-name">Người vay</label>
-                  <select class="form-select" id="borrower-name" [(ngModel)]="newRelativeInformation.borrowerId" name="borrowerId" aria-label="Default select example">
-                    <option selected="selected" disabled>Chọn tên người vay</option>
+                  <select class="form-select" id="borrower-name" [(ngModel)]="newRelativeInformation.borrowerId" name="borrowerId">
+                    <option selected="selected" >Chọn tên người vay</option>
                     <option *ngFor="let borrower of BorrowerInformationList" [value]="borrower.id">{{ borrower.fullName }}</option>
                   </select>
                 </div>
