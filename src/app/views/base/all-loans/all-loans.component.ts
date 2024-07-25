@@ -22,6 +22,8 @@ import { AllLoanService } from '../../../shared/service/allLoan.service';
 import { AllLoan } from 'src/app/shared/model/AllLoan';
 import { BorrowerService } from '../../../shared/service/borrower.service';
 import { Toast } from '../../../shared/service/toast'; // Ensure this path is correct
+import { Router } from '@angular/router';
+import { BorrowerInformation } from 'src/app/shared/model/BorrowerInformation';
 
 @Component({
   selector: 'app-all-loans',
@@ -52,10 +54,12 @@ export class AllLoansComponent {
   allLoanList: AllLoan[] = [];
   content = 'Thông tin tất cả các khoản vay(Information on all loans)';
   title = 'Bạn có thể xem được thông tin tất cả các khoản vay ở đây.';
+  borrower: BorrowerInformation | null = null;
 
   constructor(
     private allLoanService: AllLoanService,
-    private borrowerService: BorrowerService
+    private borrowerService: BorrowerService,
+    private router: Router
   ) {
     this.getAllLoans();
   }
@@ -65,7 +69,6 @@ export class AllLoansComponent {
       .getAllLoan()
       .then((allLoans) => {
         this.allLoanList = allLoans;
-        console.log(this.allLoanList);
       })
       .catch((error) => {
         console.error('Error fetching AllLoan list:', error);
@@ -77,7 +80,6 @@ export class AllLoansComponent {
       const confirmed = await Toast.confirmDelete();
       if (confirmed) {
         await this.borrowerService.deleteBorrower(id);
-        console.log(`Deleted Loan with id ${id}`);
         const toast = new Toast('success');
         toast.successDeleted(true);
         this.getAllLoans();
@@ -89,5 +91,9 @@ export class AllLoansComponent {
       const toast = new Toast('error');
       toast.successDeleted(false);
     }
+  }
+
+  navigateToDetail(id: number) {
+    this.router.navigate(['/detail/detailinportmationloan']);
   }
 }

@@ -82,7 +82,10 @@
                 <td>
                   <div class="d-flex flex-column mt-4">
                     <div class="mb-2">
-                      <a class="btn btn-primary btn-sm" href="#">
+                      <a
+                        class="btn btn-primary btn-sm"
+                        (click)="navigateToDetail(itemAllLoan.id)"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"
@@ -95,7 +98,8 @@
                         </svg>
                       </a>
                     </div>
-                    <div >
+
+                    <div>
                       <a
                         class="btn btn-primary btn-sm"
                         (click)="delete(itemAllLoan.id)"
