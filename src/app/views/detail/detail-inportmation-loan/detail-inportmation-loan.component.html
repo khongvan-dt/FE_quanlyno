@@ -1,0 +1,50 @@
+<app-tille
+  *ngIf="content || title"
+  [content]="content"
+  [title]="title"
+></app-tille>
+<c-row>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Hợp đồng vay mượn (Loan Contract)</strong>
+      </c-card-header>
+      <c-card-body>
+        <c-row>
+          <form >
+            <div class="row">
+             
+              <div class="col-12 col-md-6">
+
+                <div class="mb-3">
+                  <label class="form-label">Nơi cất giấy hợp đồng</label>
+                  <input
+                    name="compartmentId"
+                    formControlName="compartmentId"
+                    class="form-control"
+                    type="text"
+                    placeholder="Cất ở đâu?"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="basic-form-textarea"
+                    >Note</label
+                  >
+                  <textarea
+                    class="form-control"
+                    formControlName="note"
+                    name="note"
+                    id="basic-form-textarea"
+                    rows="2"
+                    placeholder="Note"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </form>
+        </c-row>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
