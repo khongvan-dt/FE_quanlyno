@@ -6,15 +6,16 @@ import  { getToken, getUserIdFromToken } from './token.service';
 @Injectable({
   providedIn: 'root'
 })
+//: Promise<any>
 export class AllLoanService {
-  getAllLoan(): Promise<AllLoan[]> {
-    const token = getToken();
+  async getAllLoan() {
+
+    const token = await getToken();
     if (token) {
       const userId = getUserIdFromToken(token);
       const headers = {
         Authorization: 'Bearer ' + token,
       };
-
       return axios
         .get<AllLoan[]>(`http://localhost:5219/api/BorrowerInformation`, {
           headers,
@@ -29,5 +30,5 @@ export class AllLoanService {
     }
   }
 
- 
+
 }

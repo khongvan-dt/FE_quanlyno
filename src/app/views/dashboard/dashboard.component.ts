@@ -10,7 +10,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ChartOptions } from 'chart.js';
 
 import { RouterLink } from '@angular/router';
 
@@ -38,7 +37,6 @@ import {
   TableDirective,
   TextColorDirective,
 } from '@coreui/angular';
-import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { IconDirective } from '@coreui/icons-angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -190,7 +188,7 @@ export class DashboardComponent {
         this.loanDoneList = allLoandone;
 
         const loanDoneIds = new Set(
-          this.loanDoneList.map((loanDone) => loanDone.LoanInformationId)
+          this.loanDoneList.map((loanDone) => loanDone.loanInformationId)
         );
         const filteredLoanInformation = this.loanInformationList.filter(
           (loanInfo) => !loanDoneIds.has(loanInfo.id)

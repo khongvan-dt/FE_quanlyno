@@ -7,7 +7,7 @@ import  { getToken, getUserIdFromToken } from './token.service';
   providedIn: 'root'
 })
 export class BorrowerService {
-  addBorrower(newBorrowerInformation: BorrowerInformation): Promise<any> {
+  addBorrower(newBorrowerInformation: BorrowerInformation) {
     const headers = {
       Authorization: 'Bearer ' + localStorage.getItem('token')
     };
@@ -17,8 +17,8 @@ export class BorrowerService {
       { headers }
     );
   }
-  getBorrowerInformation(): Promise<BorrowerInformation[]> {
-    const token = getToken();
+  async getBorrowerInformation(): Promise<BorrowerInformation[]> {
+    const token = await getToken();
     if (token) {
       const userId = getUserIdFromToken(token);
       const headers = {
@@ -38,8 +38,8 @@ export class BorrowerService {
       return Promise.reject('Token not found');
     }
   }
-  deleteBorrower(id: number): Promise<void> {
-    const token = getToken();
+  async deleteBorrower(id: number): Promise<void> {
+    const token = await getToken();
     if (token) {
       const headers = {
         Authorization: 'Bearer ' + token,

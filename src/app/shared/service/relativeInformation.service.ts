@@ -7,7 +7,7 @@ import { getToken, getUserIdFromToken } from './token.service';
     providedIn: 'root'
 })
 export class RelativeInformationservice {
-    addRelativeInformation(newRelativeInformation: RelativeInformation): Promise<any> {
+    addRelativeInformation(newRelativeInformation: RelativeInformation) {
         const headers = {
             Authorization: 'Bearer ' + localStorage.getItem('token')
         };

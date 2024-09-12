@@ -1,9 +1,9 @@
 export class LoanDone {
   id: number = 0;
-  LoanInformationId?: number;
-  BorrowerInformationId?: number;
-  AmountPaid?: number;
-  PaymentDate: Date | null = null;
-  IsInstallment?: number;
-  Note?: string;
+  loanInformationId?: number;
+  borrowerInformationId?: number;
+  amountPaid?: number;
+  paymentDate: Date | null = null;
+  isInstallment?: number;
+  note?: string;
 }

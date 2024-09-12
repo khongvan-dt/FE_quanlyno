@@ -6,12 +6,14 @@
       </c-card-header>
       <c-card-body>
         <c-row>
-          <form>
+          <form (ngSubmit)="addLoanDone()" [formGroup]="loanDoneForm">
             <div class="mb-3">
               <label class="form-label" for="borrower-select">Người vay</label>
               <select
                 class="form-select"
                 id="borrower-select"
+                [(ngModel)]="newLoanDone.borrowerInformationId"
+                formControlName="borrowerInformationId"
                 (change)="onBorrowerChange($event)"
               >
                 <option value="" selected="selected">Chọn tên người vay</option>
@@ -31,6 +33,9 @@
               <select
                 class="form-select"
                 id="loan-info-select"
+                [(ngModel)]="newLoanDone.loanInformationId"
+                name="loanInformationId"
+                formControlName="loanInformationId"
                 (change)="onLoanInfoChange($event)"
               >
                 <option value="" selected="selected">
@@ -61,7 +66,7 @@
               />
             </div>
 
-            <!-- Hiển thị khi selectedLoanAmount là 0 -->
+            <!-- Hiển thị khi selectedLoanAmount là 0
             <div class="mb-3" *ngIf="selectedLoanAmount !== 1">
               <label class="form-label" for="basic-form-name">
                 Số tiền đã trả góp (sẽ hiển thị khi đây là khoản vay trả góp)
@@ -72,11 +77,29 @@
                 type="number"
                 placeholder="Số tiền đã trả"
               />
+            </div> -->
+            <div class="mb-3">
+              <label class="form-label" for="basic-form-name"> Số tiền </label>
+              <input
+                [(ngModel)]="newLoanDone.amountPaid"
+                formControlName="amountPaid"
+                class="form-control"
+                id="basic-form-name"
+                type="number"
+                name="amountPaid"
+                placeholder="Số tiền đã trả"
+              />
             </div>
-
             <div class="mb-3">
               <label class="form-label" for="basic-form-name">Ngày trả</label>
-              <input class="form-control" id="basic-form-name" type="date" />
+              <input
+                class="form-control"
+                id="basic-form-name"
+                type="date"
+                name="paymentDate"
+                formControlName="paymentDate"
+                [(ngModel)]="newLoanDone.paymentDate"
+              />
             </div>
             <div class="mb-3">
               <label class="form-label" for="basic-form-textarea">Note</label>
@@ -85,6 +108,9 @@
                 id="basic-form-textarea"
                 rows="2"
                 placeholder="Note"
+                [(ngModel)]="newLoanDone.note"
+                                formControlName="note"
+
               ></textarea>
             </div>
 

@@ -7,7 +7,7 @@ import { getToken, getUserIdFromToken } from './token.service';
   providedIn: 'root',
 })
 export class LoanInformationService {
-  addLoanInformation(newLoanInformation: LoanInformation): Promise<any> {
+  addLoanInformation(newLoanInformation: LoanInformation) {
     const headers = {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     };
@@ -17,8 +17,8 @@ export class LoanInformationService {
       { headers }
     );
   }
-  getLoanInformation(): Promise<LoanInformation[]> {
-    const token = getToken();
+  async getLoanInformation(): Promise<LoanInformation[]> {
+    const token = await getToken();
     if (token) {
       const userId = getUserIdFromToken(token);
       const headers = {

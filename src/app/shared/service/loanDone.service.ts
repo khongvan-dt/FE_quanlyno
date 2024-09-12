@@ -7,8 +7,8 @@ import { getToken, getUserIdFromToken } from './token.service';
   providedIn: 'root',
 })
 export class LoanDoneService {
-  getLoanDone(): Promise<LoanDone[]> {
-    const token = getToken();
+  async getLoanDone(): Promise<LoanDone[]> {
+    const token = await getToken();
     if (token) {
       const userId = getUserIdFromToken(token);
       const headers = {
@@ -27,7 +27,7 @@ export class LoanDoneService {
       return Promise.reject('Token not found');
     }
   }
-  addLoanDone(newLoanDone: LoanDone): Promise<any> {
+  addLoanDone(newLoanDone: LoanDone) {
     const headers = {
       Authorization: 'Bearer ' + localStorage.getItem('token'),
     };

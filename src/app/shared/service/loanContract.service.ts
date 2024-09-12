@@ -7,7 +7,7 @@ import { getToken, getUserIdFromToken } from './token.service';
   providedIn: 'root'
 })
 export class LoanContractService {
-  addLoanContract(newLoanContract: LoanContract): Promise<any> {
+  addLoanContract(newLoanContract: LoanContract) {
     const headers = {
       Authorization: 'Bearer ' + localStorage.getItem('token')
     };
@@ -30,8 +30,8 @@ export class LoanContractService {
     });
   }
 
-  getLoanContract(): Promise<LoanContract[]> {
-    const token = getToken();
+  async getLoanContract(): Promise<LoanContract[]> {
+    const token = await getToken();
     if (token) {
       const userId = getUserIdFromToken(token);
       const headers = {

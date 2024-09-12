@@ -1,6 +1,13 @@
 import { Component } from '@angular/core';
-import { NgStyle } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TilleComponent } from '../../tille/tille.component';
+
+import {
+  ReactiveFormsModule,
+  FormsModule,
+  FormGroup,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import {
   RowComponent,
   ColComponent,
@@ -9,8 +16,6 @@ import {
   CardHeaderComponent,
   CardBodyComponent,
   FormDirective,
-  FormLabelDirective,
-  FormControlDirective,
   ButtonDirective,
 } from '@coreui/angular';
 import { BorrowerService } from 'src/app/shared/service/borrower.service';
@@ -31,23 +36,20 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     RowComponent,
+    ReactiveFormsModule,
+    FormDirective,
     ColComponent,
     TextColorDirective,
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    ReactiveFormsModule,
-    FormsModule,
-    FormDirective,
-    FormLabelDirective,
-    FormControlDirective,
     ButtonDirective,
-    NgStyle,
+    TilleComponent,
+    FormsModule,
     CommonModule,
   ],
 })
 export class LoanDoneComponent {
-  [x: string]: any;
   BorrowerInformationList: BorrowerInformation[] = [];
   LoanInformationList: LoanInformation[] = [];
   filteredLoanInformationList: LoanInformation[] = [];
@@ -56,16 +58,25 @@ export class LoanDoneComponent {
   loanAmount: number | null = null;
   selectedLoanAmount: number | null = null;
   newLoanDone: LoanDone = new LoanDone();
-
+  loanDoneForm: FormGroup;
 
   constructor(
     private borrowerService: BorrowerService,
     public loanInformationService: LoanInformationService,
     private loanDoneService: LoanDoneService,
-    private router :Router
+    private router: Router,
+    private fb: FormBuilder
   ) {
     this.getBorrowerInformation();
     this.getLoanInformation();
+    this.loanDoneForm = this.fb.group({
+      borrowerInformationId: ['', Validators.required],
+      loanInformationId: ['', Validators.required],
+      amountPaid: ['', Validators.required],
+      paymentDate: ['', Validators.required],
+      isInstallment: ['', Validators.required],
+      note: ['', Validators.required],
+    });
   }
 
   getBorrowerInformation(): void {
@@ -109,14 +120,12 @@ export class LoanDoneComponent {
 
   onLoanInfoChange(event: Event): void {
     const selectHtml = event.target as HTMLSelectElement;
+    LoanRepayment
     const selectedLoanId = Number(selectHtml.value);
 
-    const selectedLoan = this.LoanInformationList.find(
+    const selectedLoan = this.LoanInformationList.find( 
       (loan) => loan.id === selectedLoanId
     );
-
-    console.log(selectedLoan);
-
     if (selectedLoan && selectedLoan.isInstallment === 1) {
       this.selectedLoanAmount = selectedLoan.loanAmount;
     } else if (selectedLoan && selectedLoan.isInstallment === 0) {
@@ -126,11 +135,23 @@ export class LoanDoneComponent {
     }
   }
   addLoanDone(): void {
-    this.loanDoneService.addLoanDone(this.newLoanDone)
-    .then((response)=>{
-      new Toast('success');
-      this.newLoanDone = new LoanDone();
-      this.router.navigate(['/home']);
-    })
+    const formValue = this.loanDoneForm.value;
+    this.newLoanDone.borrowerInformationId =
+      formValue.borrowerInformationId * 1;
+    this.newLoanDone.loanInformationId = formValue.loanInformationId * 1;
+    this.newLoanDone.isInstallment = formValue.isInstallment * 1;
+    this.newLoanDone.amountPaid = formValue.amountPaid * 1;
+    this.loanDoneService
+      .addLoanDone(this.newLoanDone)
+      .then((response) => {
+        new Toast('success');
+        this.newLoanDone = new LoanDone();
+        this.router.navigate(['/home']);
+      })
+      .catch((error) => {
+        new Toast('error');
+        console.log('Loan Contract at error:', this.newLoanDone);
+        console.error('Error adding Loan Contract:', error);
+      });
   }
 }

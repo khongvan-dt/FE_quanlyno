@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { UploadService } from '../../../shared/service/upload.service';
 import { BorrowerInformation } from '../../../shared/model/BorrowerInformation';
 import { BorrowerService } from '../../../shared/service/borrower.service';
-import { ScanService } from '../../../shared/service/scan.sevice';
 import { Router } from '@angular/router';
 import {
   RowComponent,
@@ -48,7 +47,7 @@ export class BorrowerInformationComponent {
   backIdCard: File | null = null;
   content = "Thêm thông tin người vay";
   title = "Bạn hãy thêm thông tin cơ bản ở dưới from.Những ô nào có (*) thì bắt buộc phải nhập đủ.";
-  constructor(private router: Router,private uploadService: UploadService,private borrowerService: BorrowerService,private scanService: ScanService) {
+  constructor(private router: Router,private uploadService: UploadService,private borrowerService: BorrowerService) {
     this.newBorrowerInformation = new BorrowerInformation();
     this.newBorrowerInformation.fullName = 'Nguyễn Văn A';
     this.newBorrowerInformation.PhoneNumber = '34343444444';
@@ -75,32 +74,7 @@ export class BorrowerInformationComponent {
       });
   }
 
-  // onFileChange(event: any, side: 'front' | 'back'): void {
-  //   const file = event.target.files[0] as File;
-  //   if (side === 'front') {
-  //     this.frontIdCard = file;
-  //   } else if (side === 'back') {
-  //     this.backIdCard = file;
-  //   }
-  // }
 
-  // scanInformation(): void {
-  //   const formData = new FormData();
-  //   if (this.frontIdCard) {
-  //     formData.append('imagePaths', this.frontIdCard, this.frontIdCard.name);
-  //   }
-  //   if (this.backIdCard) {
-  //     formData.append('imagePaths', this.backIdCard, this.backIdCard.name);
-  //   }
-
-  //   this.scanService.Scan(formData)
-  //     .then(response => {
-  //       console.log('Scan thành công:', response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Lỗi khi scan:', error);
-  //     });
-  // }
 
   onFileSelected(event: any, key: string): void {
     const urlLinlApi = 'http://localhost:5219/api/BorrowerInformation/upload';

@@ -6,7 +6,7 @@ import { LoanRepayment } from '../model/LoanRepayment';
   providedIn: 'root',
 })
 export class LoanRepaymentService {
-  addLoanRepayment(newLoanRepayment: LoanRepayment): Promise<any> {
+  addLoanRepayment(newLoanRepayment: LoanRepayment) {
     const headers = {
       Authorization: 'Bearer ' + localStorage.getItem('token')
     };
